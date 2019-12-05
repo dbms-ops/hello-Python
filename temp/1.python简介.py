@@ -1,0 +1,1 @@
+# -*-coding:utf-8-*-import platformprint "start learn python"# declare a variablei = 10print i+100print type(i)name = "hello"print name,"the type is", type(name)print platform.uname()print "你好"
