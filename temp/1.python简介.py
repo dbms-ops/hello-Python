@@ -21,11 +21,9 @@ print "hello"
 
 import os
 print os.getcwd()
-os.chdir('D:\Python')
+os.chdir("D:\Python")
 print os.getcwd()
-os.mkdir("hello")
-os.rmdir("hello")
-print os.abort()
+
 
 if __name__ == '__main__':
     pass
