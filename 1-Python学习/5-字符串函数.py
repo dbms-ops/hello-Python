@@ -34,3 +34,7 @@ while index > 0:
         break
 print name[start:end]
 
+# find：用于进行字符串查找
+s = "Pycharm is a prefect IDE,You should buy for it"
+print s.find("should")
+print s.rfind("should")
