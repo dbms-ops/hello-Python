@@ -34,3 +34,19 @@ while index > 0:
         break
 print name[start:end]
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
