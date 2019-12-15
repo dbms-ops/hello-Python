@@ -68,12 +68,25 @@ print pa.findall("AbCdefg")
 
 # re.LOCALE：表示字符集本地化
 
+# re.M(re.MULTILINE): 多行模式，改变'^'和'$'的行为
+# 这种方式只对于第一行的模式进行匹配
+pa = re.compile("^\d+")
+print pa.findall("123 456\n789 012\n345 678")
+
+# 改变模式对于多行进行匹配
+pa_m = re.compile("^\d+",re.MULTILINE)
+print pa_m.findall('123 456\n789 012\n345 678')
+
+# re.S(re.DOTALL): 点任意匹配模式，改变'.'的行为,点号就能匹配包括换行符的任何字符
+pa = re.compile('.+')
+print pa.findall('das\nda\naddw\nsdaq\n')
+
+pa_D = re.compile('.+',re.DOTALL)
+print pa_D.findall('das\nda\naddw\nsdaq\n')
+
 #
 
-
-
-
-
+# next name
 
 
 if __name__ == '__main__':
