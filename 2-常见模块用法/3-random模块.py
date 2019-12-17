@@ -6,7 +6,8 @@
 # random 模块
 # 下面总结了以下用法
 
-import random, string
+import random
+import string
 
 # 用于返回一个 【a，b的一个随机数】
 print random.randint(10, 19)
@@ -36,24 +37,3 @@ ran_str = ''.join(random.sample(string.ascii_letters + string.digits, 10))
 print ran_str
 
 #
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
