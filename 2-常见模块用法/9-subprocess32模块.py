@@ -50,5 +50,22 @@ print p.returncode
 print p.wait()
 print p.returncode
 
+
+import this
+
+
 if __name__ == '__main__':
     pass
+
+
+
+
+
+
+
+
+
+
+
+
+
