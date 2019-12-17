@@ -31,15 +31,10 @@ print res
 
 # 2 支持的功能
 # subprocess.call：用于执行一个操作系统命令
-subprocess.call(['ls','-l'],stdout=PIPE,stderr=PIPE)
+subprocess.call(['ls','-l'],stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+
 
 # 2 subprocess.check_call 用于执行命令，执行成功，返回成功，否则抛出异常
 
 
 
-
-
-
-
-
-    
