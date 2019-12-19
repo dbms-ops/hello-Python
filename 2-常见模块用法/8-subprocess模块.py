@@ -4,6 +4,7 @@
 
 # subprocess模块：用于执行操作系统命令，并且获取对应的结果
 # 完善的模块功能需要使用Python3系列来使用
+# 该模块不建议在Python2 中使用，建议使用subprocess32
 
 import subprocess
 
