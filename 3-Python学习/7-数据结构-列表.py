@@ -71,7 +71,31 @@ print max(num)
 # 获取列表中的最小值
 print min(num)
 
-#
+# 统计某个元素出现的格式
+print num.count(4)
+
+# 列表反转
+print num
+num.reverse()
+print num
+
+# 排序
+num.sort()
+print num
+
+# 拷贝
+#   浅拷贝：引用拷贝，类似于软链接，引用的地址是一样的
+print num
+numCpoy = num
+num[3]='change it'
+print id(num),num
+print id(numCpoy),numCpoy
+
+#   深拷贝：内存拷贝，引用的地址是不一样的
+# Python 2.7 不支持深拷贝
+# numCpoyNew = num.copy()
+
+# 元组转成列表
 
 
 
