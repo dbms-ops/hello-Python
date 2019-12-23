@@ -65,6 +65,8 @@ for index, num in enumerate([1, 2, 3, 4, 5, 6]):
 #
 
 
+import turtle
+
 
 
 if __name__ == '__main__':

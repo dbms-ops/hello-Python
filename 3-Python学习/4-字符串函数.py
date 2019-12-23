@@ -80,7 +80,113 @@ print ord('A'), ord('B')
 print chr(97), chr(89)
 
 # 字符串大小比较：从首字符开始依次进行比较，如果相等比较下一个ASCII字符的大小
-print "aaaaa" < "bbbbb","aa" > "caa"
+print "aaaaa" < "bbbbb", "aa" > "caa"
+
+# split(str[,num]): 字符串分割
+#   str:表示按照str进行字符串切割
+#   num：表示仅仅截取num指定的个数，剩下的不在进行截取
+#
+proverb = "Faith wi ll mo v e mountains"
+print proverb.split(" ", 3)
+
+# splitlines():
+#   按照('\r','\n','\r\n') 进行分割，返回一个列表
+
+proverb = """
+Time flies like an arrow
+Where there is smoke, there is fire.
+The pot calls the kettle black.
+Monkey see, monkey do.
+Not getting what you want is sometimes a wonderful stroke of luck. 
+"""
+print proverb.strip().splitlines()
+
+# join(str):用于将字符串组合成为一个字符串
+print '\n\r'.join(proverb.strip().splitlines())
+
+# 字符串中的最大值与最小值
+print max(proverb), '**{}**'.format(min(proverb))
+
+# 字符串替换
+
+# replace(oldStr, newStr, count):
+#   使用newStr替换oldStr，并且可以指定替换的次数
+print proverb.replace("like", 'not like', 1)
+
+import string
+
+# 字符串映射表
+# 这里的映射是按照单个字符进行映射的
+temp = string.maketrans('good', 'nice')
+print proverb.translate(temp)
+
+# startswith(prefix[, start[, end]]):
+#    判断字符是否以某个字符换开头
+print proverb.startswith('Time', 1, len(proverb))
+
+# endswith(prefix[, start[, end]]):
+#   判断字符串是否是以某个字符串结尾的
+#
+
+print proverb.endswith('time', 1, len(proverb))
+
+# encode(encoding='utf-8',errors='strict')
+#   用于进行数据编码，默认是'utf-8'
+
+proverb = "One generation plants the trees, another gets the shade."
+proverbUtf = proverb.encode('utf-8')
+print proverbUtf, type(proverbUtf)
+
+# decode(): 用于进行字符串解码c操作
+print proverbUtf.decode('utf-8'), type(proverbUtf.decode('utf-8'))
+
+# 编码需要和解码一致
+
+# isalpha():
+#   至少有一个字符，并且字符都是字母
+print proverbUtf.isalpha()
+
+# isalnum():
+#   至至少有一个字符，且所有字符都是字母或者是数字
+print proverbUtf.isalnum()
+
+# isupper():
+#   至少有一个英文字符，并且所有的字符都是大写
+print 'ABC'.isupper()
+print 'ABC1'.isupper()
+print '1'.isupper()
+print 'ABC#'.isupper()
+
+# islower():
+#   至少有一个英文字符，并且所有的字符都是小写
+print 'abc'.islower()
+print 'abc1'.islower()
+print '1'.islower()
+print 'abc#'.lower()
+
+# istitle():
+#   如果字符串是标题化的[首字母大写]，返回为True
+print 'One Generation'.istitle()
+
+# isdigit():
+#   如果字符串只包含数字字符，返回True，否则返回False
+print '123'.isdigit()
+print '123a'.isdigit()
+# isnumeric(): 同上，但是2.7不支持
+#
+
+# 2.7 不支持： isdecimal(): 字符串只包含十进制字符，为True，否则为False
+# isspace():
+#   如果字符串只包含空格，返回True
+print '123'.isspace()
+print '\n'.isspace()
+print '\t'.isspace()
+print ' '.isspace()
+print '\r'.isspace()
+
+
+
+
 
 
 

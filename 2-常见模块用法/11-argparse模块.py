@@ -21,7 +21,9 @@ parser.add_argument('-v', '--verbose', help='increase output verbosity')
 args = parser.parse_args()
 print(args.square ** 2)
 
-#
+
+
+
 
 if __name__ == '__main__':
     pass
