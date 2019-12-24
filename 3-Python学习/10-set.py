@@ -55,6 +55,7 @@ num1 = {1, 2, 3, 4}
 num2 = set((4, 5, 6, 2))
 print num1 & num2
 print type(num1)
+#
 
 # set最常见的用法是进行数据去重操作
 
