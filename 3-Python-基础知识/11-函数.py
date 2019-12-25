@@ -131,6 +131,7 @@ def fun3(*args, **kwargs):
 sum = lambda num1, num2: num1 + num2
 print sum(1, 13)
 
+
 # 装饰器
 #   本质上是闭包，用于将一个函数作为参数传递给另一个函数，并且返回值是一个函数
 #   装饰器就是在对函数进行处理
@@ -139,20 +140,23 @@ print sum(1, 13)
 def test():
     print "More haste, less speed."
 
+
 # 声明一个装饰器函数来修饰func
 def outer(test):
     def inner():
         print "Outer is here, decorator"
         test()
+
     return inner
+
 
 # 获取修饰后的函数
 f = outer(test)
 f()
 
+
 # 上面的装饰器是学习版本，下面是正式的版本
 #
-
 
 
 def outer(func):
@@ -160,6 +164,7 @@ def outer(func):
         if age < 0:
             age = 0
         func(age)
+
     return inner
 
 
@@ -167,15 +172,19 @@ def outer(func):
 def sayAge(age):
     print "this is {} years".format(age)
 
+
 sayAge(-10)
+
 
 # 比较通用的装饰器
 # 支持传递任意参数进行判断
 def outer(func):
-    def inner(*args,**kwargs):
+    def inner(*args, **kwargs):
         pass
-        func(*args,**kwargs)
+        func(*args, **kwargs)
+
     return inner
+
 
 #
 

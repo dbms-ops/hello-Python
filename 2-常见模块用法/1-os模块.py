@@ -4,6 +4,20 @@
 
 import os
 
+# 操作系统类型
+print os.name
+
+# 打印操作系统的详细信息，windows不支持
+print os.uname()
+
+# 打印操作系统的环境变量
+print os.environ
+
+# 获取某个详细的环境变量
+print os.environ.get("SSH_CLIENT")
+
+#
+
 # print "获取当前脚本工作的目录路径: "
 print os.getcwd()
 
@@ -34,13 +48,22 @@ if not os.path.exists("./temp/a/b/c"):
     os.system("ls")
 os.rmdir("./temp/a/b/c")
 os.system("ls")
+
 # 删除多级目录,从左到右都会被删除，需要传递一个完整的删除目录
 if os.path.exists("./temp/a/b/"):
     os.removedirs("./temp/a/b/")
 os.system("ls")
 
-# 返回指定目录下所有文件
+# 文件或者目录的重命名操作
+os.rename('./temp/a/b', './temp/a/c')
 
+# 删除普通文件
+os.remove("./temp/a/b")
+
+#
+
+
+# 返回指定目录下所有文件
 print os.listdir("/root/script/tmp")
 
 # 修改权限以0开头
@@ -63,6 +86,10 @@ print os.path.dirname("/root/script/tmp/file")
 # 目录切分，返回一个元组
 print "the dir is ", os.path.split("/root/script/tmp/file")[0], "\nthe filename is  ", \
     os.path.split("/root/script/tmp/file")[1]
+
+# 获取文件的扩展名,没有扩展名为空
+path = "/root/script/tmp/file.txt"
+print os.path.splitext(path)
 
 # 返回最后一级目录
 print os.path.basename("/root/script/tmp/file")
@@ -87,7 +114,7 @@ print os.path.abspath("./temp/a/file")
 # st_ctime          : 文件创建时间
 print os.stat("/root/script/tmp/temp/a/file")[6]
 
-# 获取文件大小
+# 获取文件大小[字节]
 print os.path.getsize("/root/script/tmp/temp/a/file")
 
 # 获取文件最后访问时间
