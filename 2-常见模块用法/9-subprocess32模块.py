@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 import subprocess32
 
 # subprocess32.call：执行一个命令，等待执行完成，或者等待超时

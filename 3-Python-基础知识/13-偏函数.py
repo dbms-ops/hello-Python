@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 
 # 偏函数：
 #  利用原有函数的功能，申明类似的函数，实现简单的功能

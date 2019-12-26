@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 #
 # 总结常见字符串函数
 #

@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: lixun
+
 # web：https://www.cnblogs.com/yyds/p/6901864.html
 # logging 模块：
 #   日志是一种可以追踪某些软件运行时所发生事件的方法。一个事件可以用一个可包含可选变量数据的消息来描述。此外，事件也有重要性的概念，

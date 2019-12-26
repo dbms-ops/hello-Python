@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 
 # 字典：
 #   使用 key-value 存储，具有极快的查询速度

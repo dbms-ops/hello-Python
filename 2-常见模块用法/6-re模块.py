@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 # re 模块：主要用于进行正则表达式匹配
 #
 

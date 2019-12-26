@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 #
 # 字符串
 # 字符串是一单引号或者双引号引用的任意文本

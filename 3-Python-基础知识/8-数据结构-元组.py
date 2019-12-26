@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 
 # 数据结构-元组
 #       元组：元组和列表类似，但是元组内的元素是不可变得

@@ -1,6 +1,8 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: Lixun
+#
+
+
 # datetime 模块：和时间相关的模块
 
 from datetime import date
@@ -13,6 +15,7 @@ print 'fromtimestamp(1491448600): ', date.fromtimestamp(1491448600)
 
 # 返回对应公历序数的日期对象
 print 'date.fromordinal(1)', date.fromordinal(1234561)
+
 
 
 # 对象、属性、方法

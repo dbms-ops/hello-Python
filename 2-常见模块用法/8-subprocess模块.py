@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 
 # subprocess模块：用于执行操作系统命令，并且获取对应的结果
 # 完善的模块功能需要使用Python3系列来使用

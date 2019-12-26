@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: linux
+
 # 数据结构-列表：
 #   Python中简单的数据结构
 #   列表：列表是一个有序的集合，

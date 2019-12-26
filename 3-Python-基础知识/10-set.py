@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: linux
+
 # set：
 #   无序和无重复的list
 #   1、set的对象不能够是可变对象，字典、列表是不能够添加的，但是元组是可以的

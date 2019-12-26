@@ -1,6 +1,5 @@
 # -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
-# author: linux
 # 异常处理：
 #   程序运行过程中遇到的会导致程序崩溃的异常；
 #   程序在运行过程跳过错误，继续向下执行；

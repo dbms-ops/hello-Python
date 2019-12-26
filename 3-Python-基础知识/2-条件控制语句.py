@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 #
 # 条件控制语句
 # 条件控制语句一共包含三个：

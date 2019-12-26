@@ -1,6 +1,6 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# author: Lixun
+
 #
 # 文件的操作是通过文件描述符来进行的
 #   文件的操作包括读文件、写文件
