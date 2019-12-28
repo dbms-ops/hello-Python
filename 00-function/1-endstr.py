@@ -15,3 +15,4 @@ for line in iter(input, endstr):
     output += line + '\n'
 
 print str
+
