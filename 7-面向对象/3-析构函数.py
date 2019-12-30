@@ -9,11 +9,13 @@
 #   ；
 #
 #
+
+
 class Person(object):
     # 定义属性：本质上就是在定义变量,这里的变量是以下的方法所公用的，特例在具体的方法中声明
 
     def __init__(self, name, age, weight, height):  # 函数在创建对象的时候，自动执行
-        self.name = name # 使用构造函数的参数列表初始化类属性
+        self.name = name  # 使用构造函数的参数列表初始化类属性
         self.age = age
         self.weight = weight
         self.height = height
@@ -24,6 +26,7 @@ class Person(object):
 
     # 定义方法：定义函数
     # self:必须是第一参数，代表类的实例，代表第一个对象
+
     def run(self):
         print "just run"
 
@@ -39,8 +42,10 @@ class Person(object):
         :param drinks: what kind of drinks you drink
         """
         print "{} drink {}".format(self.name, drinks)
-    def __del__(self): # 当对象在被释放的时候被调用
+
+    def __del__(self):  # 当对象在被释放的时候被调用
         print "you cand't see me,del"
+
 
 # tom = Person("tom",11,120,30)
 
@@ -52,5 +57,5 @@ class Person(object):
 def func():
     tom = Person("tom", 11, 120, 30)
 
-func()
 
+func()

@@ -35,12 +35,13 @@ def listalldeep(dpath):
         filelist = os.listdir(dirPath)
         # 循环遍历文件或者是目录列表
         for fileName in filelist:
-            fileabspath = os.path.join(dirPath,fileName)
+            fileabspath = os.path.join(dirPath, fileName)
             if os.path.isfile(fileabspath):
                 print fileName
             else:
                 print "dir: " + fileName
                 stack.append(fileabspath)
+
 
 # 队列实现广度遍历
 # 队列的先进先出特性是实现广度遍历的基础
@@ -56,16 +57,11 @@ def getalldirpath(dpath):
         # 找出所有的文件
         fileall = os.listdir(dirpath)
         for file in fileall:
-            fileabspath = os.path.join(dirpath,file)
+            fileabspath = os.path.join(dirpath, file)
             if os.path.isfile(fileabspath):
                 print "文件：" + fileabspath
             else:
                 filequeue.append(fileabspath)
-#
-
-
-
-
 
 
 if __name__ == '__main__':
