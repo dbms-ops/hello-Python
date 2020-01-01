@@ -36,3 +36,5 @@ tom.speak()
 # 下面添加的属性是被限制的
 tom.height = 91
 print tom.height
+
+

@@ -18,6 +18,10 @@ print status
 if status:
     print "commands run successful"
 
+status, outputtest = commands.getstatusoutput("netstat -ntl | grep 3306")
+print status, outputtest
+if not status:
+    print "the result is {}".format(outputtest)
 
 
 
