@@ -285,12 +285,98 @@ def nargs_remainder():
     parser.add_argument('args', nargs=argparse.REMAINDER)
     print parser.parse_args('--foo B cmd --arg1 XX ZZ'.split())
 
-# const: ;
+# const: 表示需要保持改参数值不变，并且这个值不是从命令行获取
+# 最常见的两个用途：
+#   1、当  add_argument() 使用 action='store_const' or action='append_const'；
+#   2、当 add_argument() 调用位置参数使用 nargs='?'，该选项允许传递0个或者一个命令行参数，当传递的参数为空时，默认使用的是const属性的
+#   参数；
+
+# default:
+#   1、当位置参数或者是命令行参数被省略时，默认default被设置为None，该参数允许被设置，在位置参数或者命令参数传递为空时，使用default传递的
+#   默认参数；
+#
+def default_int_help():
+    # 用于设置参数的默认值，这个很有用
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-f','--foo', default=42)
+    print parser.parse_args(['--foo', '2'])
+    # 当传递的参数为空时，使用默认参数值 42
+    print  parser.parse_args([])
+
+def default_string_help():
+    # 如果设置的参数类型不匹配，参数为int，默认类型为default为 string，解析器会进行转换;
+    # 如果不提供类型，将不进行转换
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--length', default='10', type=int)
+    parser.add_argument('--width', default='10.5')
+    print  parser.parse_args([])
+
+def default_positional_help():
+    # 当位置参数使用 nargs=？|*时，当没有命令行参数传递时，使用默认参数
+    parser = argparse.ArgumentParser()
+    parser.add_argument('foo', nargs='?', default=42)
+    print parser.parse_args(['a'])
+    print parser.parse_args([])
+    # 当传递 default=argparse.SUPPRESS 时，默认值为空
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--foo', default=argparse.SUPPRESS)
+    print parser.parse_args([])
+    print parser.parse_args(['--foo', '1'])
+
+# type:
+#   默认情况下，ArgumentParser 对象从命令行读取的参数是字符串类型，但是字符串类型，往往需要解释称为其他的类型
+#   type用来执行这种转换;
+def type_file_help():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('foo', type=int)
+    parser.add_argument('bar', type=file)
+    print parser.parse_args('2 temp.txt'.split())
+
+def type_write_file_help():
+    # 该参数支持创建文件 FileType('w') 表示创建可写文件
+    parser = argparse.ArgumentParser()
+    parser.add_argument('bar', type=argparse.FileType('w'))
+    print parser.parse_args(['out.txt'])
+
+
+# choice: 某些命令行参数支持从一个指定的列表中选择，并且会检查传递的参数是否在这个列表中;
+# 参数检查发生在类型转换之后，类型需要尽可能匹配
+def choice_check_help():
+    parser = argparse.ArgumentParser(prog='game.py')
+    parser.add_argument('move', choices=['rock', 'paper', 'scissors'])
+    print parser.parse_args(['rock'])
+    # 当传递的参数不在列表中时，会抛出异常
+    print parser.parse_args(['fire'])
+
+def choice_conversions_help():
+    parser = argparse.ArgumentParser(prog='doors.py')
+    parser.add_argument('door', type=int, choices=range(1, 4))
+    # 对于传入的字符串是可以转换成为 int 类型的
+    print parser.parse_args(['3'])
+    # 在进行类型转换之后，检查参数是否在列表中
+    print parser.parse_args(['4'])
+
+
+# required:
+#   对于可选参数，默认是不强制进行传递的，如果需要修改这种行为，通过传递 require 来进行更改;
+
+def required_help():
+    # require 传递参数，要求改参数必须传递，类似于位置参数行为；
+    # 如果参数设置了 required 但是却没有传递，那么会出错
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--foo', required=True)
+    print parser.parse_args(['--foo', 'BAR'])
+
+
+def help_help():
+    pass
 
 
 
 def main():
-    nargs_asterisk()
+    required_help()
+
+
 
 if __name__ == '__main__':
     main()
