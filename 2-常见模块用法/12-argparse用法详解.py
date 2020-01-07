@@ -369,12 +369,28 @@ def required_help():
 
 
 def help_help():
-    pass
+    # help 对于某些选项支持静默输出，通过设置argparse.SUPPRESS
+    parser = argparse.ArgumentParser(prog='frobble')
+    parser.add_argument('--foo',help=argparse.SUPPRESS)
+    parser.print_help()
+
+
+def metavar_help():
+    # metavar指定类似于：
+    #   [-h] [--foo YYY] XXX
+    #   XXX
+    #   --foo YYY；
+    parser = argparse.ArgumentParser()
+    parser.add_argument('bar', metavar='XXX')
+    parser.add_argument('--foo', nargs=2, metavar=('bar', 'baz'))
+    parser.print_help()
+
+#
 
 
 
 def main():
-    required_help()
+    metavar_help()
 
 
 
