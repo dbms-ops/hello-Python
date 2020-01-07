@@ -404,6 +404,13 @@ def dest_help():
 #   args：支持一个参数列表，默认从 sys.argv 进行传递
 #   namespace：这个默认传递为空；
 
+def parse_args_help():
+    #
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-x')
+    parser.add_argument('--foo')
+    print parser.parse_args(['-x', 'X'])
+    print parser.parse_args(['--foo', 'FOO'])
 
 
 
