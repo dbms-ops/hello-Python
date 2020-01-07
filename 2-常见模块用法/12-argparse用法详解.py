@@ -380,17 +380,37 @@ def metavar_help():
     #   [-h] [--foo YYY] XXX
     #   XXX
     #   --foo YYY；
+    # 通过上述方式指定期望传递的参数个数，需要结合 nargs 一起使用
     parser = argparse.ArgumentParser()
     parser.add_argument('bar', metavar='XXX')
     parser.add_argument('--foo', nargs=2, metavar=('bar', 'baz'))
-    parser.print_help()
+    # parser.print_help()
+    args = parser.parse_args()
+    # 输出类似于：
+    # {'foo': ['bar', 'baz'], 'bar': 'XXX'}
+    print args.__dict__
 
-#
+def dest_help():
+    # dest：
+    #   通常情况，参数解析都会交给 parse_args() 来进行，可以通过dest来修改这种行为；
+    parser = argparse.ArgumentParser()
+    # 在传递dest之后，--foo对应的值，应该保存在bar中，而不是foo中
+    parser.add_argument('--foo', dest='bar')
+    print parser.parse_args('--foo XXX'.split()).__dict__
+
+
+# parse_args(args=None, namespace=None)
+#   用于进行命令行参数解析
+#   args：支持一个参数列表，默认从 sys.argv 进行传递
+#   namespace：这个默认传递为空；
+
+
+
 
 
 
 def main():
-    metavar_help()
+    dest_help()
 
 
 
