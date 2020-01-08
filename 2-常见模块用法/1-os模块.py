@@ -60,7 +60,7 @@ os.rename('./temp/a/b', './temp/a/c')
 # 删除普通文件
 os.remove("./temp/a/b")
 
-#
+
 
 
 # 返回指定目录下所有文件

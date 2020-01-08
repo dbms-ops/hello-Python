@@ -13,15 +13,16 @@ output = commands.getoutput('pwd &> /dev/null && echo 1')
 print output, type(output)
 
 #  获取输出的状态，以及输出的结果
-status, outputtest = commands.getstatusoutput("touch a")
+status, output = commands.getstatusoutput("touch a")
 print status
 if status:
     print "commands run successful"
 
-status, outputtest = commands.getstatusoutput("netstat -ntl | grep 3306")
-print status, outputtest
+status, output = commands.getstatusoutput("netstat -ntl | grep 3306")
+print status, output
 if not status:
-    print "the result is {}".format(outputtest)
+    print "the result is {}".format(output)
+
 
 
 
