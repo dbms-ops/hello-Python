@@ -14,8 +14,12 @@ def new_sum(x,y):
 def new_sub(x,y):
     return x - y
 
+if __name__ == '__main__':
+    pass
 
-print new_sub(11,2)
+
+
+
 
 
 

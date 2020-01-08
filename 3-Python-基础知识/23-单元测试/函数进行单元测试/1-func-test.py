@@ -2,7 +2,8 @@
 # !/data1/Python2.7/bin/python2.7
 #
 # 该文件是一个单元测试文件，用于测试 文件 1-函数单元测试
-#
+# 该文件是对于函数文件 func 进行单元测试
+
 import unittest
 from func import new_sub
 from func import new_sum
@@ -10,9 +11,11 @@ from func import new_sum
 
 # 开始进行测试
 class Test(unittest.TestCase):
+    # 测试开始时，这个类自动调用，用于自定义在测试开始前的操作
     def setUp(self):
         print "Unit tests start calling automatically"
 
+    # 测试结束时，自动调用，在测试结束时进行调用
     def tearDown(self):
         print "The test ended automatically"
 
@@ -25,4 +28,5 @@ class Test(unittest.TestCase):
 
 
 if __name__ == '__main__':
+    # 通过main开始进行测试
     unittest.main()
