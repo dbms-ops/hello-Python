@@ -8,18 +8,18 @@
 # 
 
 
-def test_sum(x,y):
+def new_sum(x,y):
     return x + y
 
-def test_sub(x,y):
+def new_sub(x,y):
     return x - y
 
 
+print new_sub(11,2)
 
 
 
 
 
-if __name__ == '__main__':
-    pass
+
     
