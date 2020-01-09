@@ -18,7 +18,6 @@ def combination_help():
     print len(mylist)
 
 
-
 def main():
     combination_help()
 
