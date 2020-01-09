@@ -5,7 +5,6 @@
 #   该模块在 Python 3 中命名为 configparser，该模块主要用改修改和读取配置文件；
 #
 import ConfigParser
-import io
 import os
 
 
@@ -14,7 +13,7 @@ import os
 
 # RawConfigParser Objects 支持的方法
 #   RawConfigParser.defaults()：
-#       返回实例的默认参数；
+#       返回实例section 为 default 对应的 option ；
 #   RawConfigParser.sections():
 #       返回所有的section列表；
 #   RawConfigParser.add_section(section)：
@@ -88,9 +87,18 @@ def read_config(configfile):
     config.set('mysqld', 'a_float', 1)
 
 
+def add_default(cnf):
+    config = ConfigParser.ConfigParser()
+    config.set('DEFAULT', 'replayer.collection_parallel', 6)
+    config.set('DEFAULT', 'replayer.document_parallel', 8)
+    config.set('DEFAULT', 'replayer.collection_drop',False)
+    with open(cnf, 'wb') as fp:
+        config.write(fp)
+
+
 def main():
     configfile = "/root/config.cnf"
-    read_config(configfile)
+    add_default(configfile)
 
 
 if __name__ == '__main__':
