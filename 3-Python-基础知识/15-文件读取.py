@@ -19,14 +19,14 @@
 #         errors：比较常用，用于指定对于文件打开错误的处理方式
 #     读取文件内容
 #     关闭文件
-#           。
+#
 
 
 # 打开文件
 path = '/root/tmp/pycharm_project_179/test'
 
 # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-file_handler = open(path,'r')
+file_handler = open(path, 'r')
 
 # 读取文件内容
 # 1、读取文件的全部内容
@@ -51,19 +51,15 @@ file_handler.seek(10)
 file_handler.close()
 # 完整的文件读取过程
 try:
-    file_handler = open(path,'r',encoding='utf-8')
+    file_handler = open(path, 'r', encoding='utf-8')
     print file_handler.read()
 finally:
     if file_handler:
         file_handler.close()
 
 # 更简单的文件读取方式
-with open(path,'r',encoding='utf-8') as file_handler:
+with open(path, 'r', encoding='utf-8') as file_handler:
     print file_handler.read()
-
-
-
-
 
 if __name__ == '__main__':
     pass

@@ -1,5 +1,5 @@
 # -*-coding:utf-8-*-
-#!/data1/Python2.7/bin/python2.7
+# !/data1/Python2.7/bin/python2.7
 
 
 # 字典：
@@ -19,7 +19,7 @@
 
 
 # 定义字典
-student = {'tom':59,'jerry':89,'alice':91}
+student = {'tom': 59, 'jerry': 89, 'alice': 91}
 
 # 获取元素
 print student['tom']
@@ -41,7 +41,7 @@ print student
 # 字典遍历
 #
 for key, value in student.items():
-    print key,value
+    print key, value
 
 for key, value in enumerate(student):
     print key, value
@@ -49,7 +49,7 @@ for key, value in enumerate(student):
 
 # 字典的用法之一：
 #
-property = '''
+proverb = '''
 One generation plants the trees, another gets the shade.
 A word once spoken can never be recalled.
 Beauty is in the eye of the beholder.
@@ -57,9 +57,5 @@ Every dog has his day.
 A miss is as good as a mile.
 '''
 
-
-
-
 if __name__ == '__main__':
     pass
-    

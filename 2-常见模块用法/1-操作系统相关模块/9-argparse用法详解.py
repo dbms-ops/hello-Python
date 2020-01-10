@@ -22,7 +22,7 @@ import textwrap
 
 
 def integers_help():
-    # /data1/python2.7/bin/python2.7 /tmp/pycharm_project_73/2-常见模块用法/12-argparse用法详解.py 1 2 3 4 56  --sum
+    # /data1/python2.7/bin/python2.7 /tmp/pycharm_project_73/2-常见模块用法/9-argparse用法详解.py 1 2 3 4 56  --sum
     # 创建 ArgumentParser 解析对象
     parser = argparse.ArgumentParser(description="Process some integers.", epilog="Written by DBA,verson 2.3.1")
 

@@ -6,7 +6,7 @@
 #  1、首先打开文件
 
 path = "/root/tmp/pycharm_project_179/file.write1"
-file_write = open(path,'w')
+file_write = open(path, 'w')
 
 # a.将内容写入到缓冲区，等到缓冲区刷新，将内容写入到文件里面，不是立即写入的
 file_write.write("A bad penny always turns up. ")
