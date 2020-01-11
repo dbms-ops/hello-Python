@@ -91,7 +91,7 @@ def add_default(cnf):
     config = ConfigParser.ConfigParser()
     config.set('DEFAULT', 'replayer.collection_parallel', 6)
     config.set('DEFAULT', 'replayer.document_parallel', 8)
-    config.set('DEFAULT', 'replayer.collection_drop',False)
+    config.set('DEFAULT', 'replayer.collection_drop', False)
     with open(cnf, 'wb') as fp:
         config.write(fp)
 
