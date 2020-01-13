@@ -42,7 +42,8 @@ def re_search_help():
 
 
 def re_sub_help():
-    # sub：用于进行替换，并且返回替换的次数
+    # sub：在目标字符串中以正则表达式的规则匹配字符串，在把他们替换成指定的字符串，可以指定替换的次数;
+    # subn: 返回一个元组，返回被替换的字符串以及被替换的次数
     a = 'a1b2c3'
     print re.sub(r'\d+', '0', a), type(re.sub(r'\d+', '0', a))  # 在a里面把数字替换成为0
 
@@ -128,16 +129,33 @@ def re_partern_help():
     pa_d = re.compile('.+', re.DOTALL)
     print pa_d.findall('das\nda\naddw\nsdaq\n')
 
-
 def re_test_help():
     text = "ip = 127.0.0.1"
     print re.split(r'=', text, maxsplit=2)
 
 
+def re_finditer_help():
+    # re.finditer(pattern,string, flags=0):
+    # 功能和findall 类似，扫描整个字符串，返回的是一个迭代器
+    # ;
+    text = 'a b c d e f g '
+    d = re.finditer(r'[a-z]', text)
+    while True:
+        try:
+            print next(d)
+        except StopIteration:
+            break
+
+
+def re_replace_help():
+    pass
+
+
+
 
 # next name
 def main():
-    re_test_help()
+    re_finditer_help()
 
 
 if __name__ == '__main__':
