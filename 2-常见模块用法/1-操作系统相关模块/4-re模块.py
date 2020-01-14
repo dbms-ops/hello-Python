@@ -97,10 +97,10 @@ def re_match_project_help():
 def re_complie_help():
     # Pattern对象
     # 通过re.complie()生成Pattern对象
-    pa = re.compile("(\d)")
-    print pa.split("he has 2 books and 1 pen")
-    print pa.findall("he has 2 books and 1 pen")
-    print pa.sub('much', 'he has 2 books and 1 pen')
+    digit = re.compile("(\d)")
+    print digit.split("he has 2 books and 1 pen")
+    print digit.findall("he has 2 books and 1 pen")
+    print digit.sub('much', 'he has 2 books and 1 pen')
 
 
 def re_partern_help():
@@ -129,6 +129,7 @@ def re_partern_help():
     pa_d = re.compile('.+', re.DOTALL)
     print pa_d.findall('das\nda\naddw\nsdaq\n')
 
+
 def re_test_help():
     text = "ip = 127.0.0.1"
     print re.split(r'=', text, maxsplit=2)
@@ -149,8 +150,6 @@ def re_finditer_help():
 
 def re_replace_help():
     pass
-
-
 
 
 # next name

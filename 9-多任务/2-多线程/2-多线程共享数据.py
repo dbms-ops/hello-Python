@@ -22,7 +22,7 @@ def thread_1(n):
 
 
 def thread_2(n):
-    num = 10001
+    num = n
 
 
 def main():
