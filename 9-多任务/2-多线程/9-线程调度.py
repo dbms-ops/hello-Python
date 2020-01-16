@@ -4,6 +4,7 @@
 # user: Administrator
 # description: 脚本用于实现线程调度功能，实现线程执行顺序的可控性
 #
+
 import threading
 
 # 线程条件变量
