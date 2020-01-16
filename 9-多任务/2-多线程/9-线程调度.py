@@ -2,8 +2,9 @@
 # !/data1/Python2.7/bin/python2.7
 # date: 2020/1/15 20:42
 # user: Administrator
-# description: 脚本用于实现线程调度功能，实现线程执行顺序的可控性
+# description: 脚本用于实现线程调度功能，实现线程执行顺序的可控性                                                              *
 #
+
 
 import threading
 
