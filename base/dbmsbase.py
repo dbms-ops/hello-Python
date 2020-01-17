@@ -21,7 +21,7 @@ class Dbms():
         :return: Returns a dictionary containing usernames and passwords;
         """
         login = {'user': '', 'password': ''}
-        filepath = "/etc/snmp/yyms_agent_{}_scripts/db_{}.conf".format(type, port)
+        filepath = "".format(type, port)
         if os.path.exists(filepath):
             with open(filepath, 'r') as fread:
                 while fread.readline():
