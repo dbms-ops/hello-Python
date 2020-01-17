@@ -1,5 +1,8 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020/1/16 16:57
+# user: Administrator
+# description: 脚本用于进行文档测试
 #
 # 文档测试
 #   文档测试是写在文件里面的;

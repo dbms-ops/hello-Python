@@ -1,5 +1,9 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020/1/16 16:57
+# user: Administrator
+# description: 常见的条件控制语句：主要是单分支与多分支 if 语句
+#
 
 #
 # 条件控制语句
@@ -26,20 +30,23 @@
 #   其余为真
 
 # 通过下面的方式可以用于判断一个表达式真还是假
-if 0:
-    print "True"
-else:
-    print "False"
 
-if 0.0:
-    print "true"
-else:
-    print "False"
 
-if None:
-    print "True"
-else:
-    print "False"
+def True_or_Fales():
+    if 0:
+        print "True"
+    else:
+        print "False"
+
+    if 0.0:
+        print "true"
+    else:
+        print "False"
+
+    if None:
+        print "True"
+    else:
+        print "False"
 
 
 # 判断传递的参数为真还是为假
@@ -56,9 +63,6 @@ def true_or_false(argument):
         print "fasle"
     return True
 
-true_or_False(1)
-true_or_False(None)
-true_or_False(0)
 
 # 3、条件控制语句
 # if 表达式1：
@@ -72,26 +76,28 @@ true_or_False(0)
 # 语句
 # 对于分支IF语句只会选择其中的一个分支执行，知道表达式为真则停止
 #
-age = int(input("please input your age:"))
+def Multi_if():
+    age = int(input("please input your age:"))
 
-if age < 0:
-    print "no one"
-elif age <= 3:
-    print "a baby"
-elif age <= 6:
-    print "a children"
-elif age <= 18:
-    print "youth"
-elif age <= 65:
-    print "Adults"
-elif age <= 100:
-    print "best"
-else:
-    print "no person"
+    if age < 0:
+        print "no one"
+    elif age <= 3:
+        print "a baby"
+    elif age <= 6:
+        print "a children"
+    elif age <= 18:
+        print "youth"
+    elif age <= 65:
+        print "Adults"
+    elif age <= 100:
+        print "best"
+    else:
+        print "no person"
 
 
-
+def main():
+    Multi_if()
 
 
 if __name__ == '__main__':
-    pass
+    main()

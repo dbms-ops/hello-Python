@@ -1,5 +1,9 @@
 # -*-coding:utf-8-*-
-#!/data1/Python2.7/bin/python2.7
+# !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 文件写入操作的流程；
+#
 
 #
 # 文件内容写入
@@ -24,6 +28,9 @@ file_write.flush()
 file_write.close()
 
 
-if __name__ == '__main__':
+def main():
     pass
-    
+
+
+if __name__ == '__main__':
+    main()

@@ -1,5 +1,9 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: dict 的常见操作
+#
 
 
 # 字典：
@@ -18,44 +22,48 @@
 #   2、占据的内存较大
 
 
-# 定义字典
-student = {'tom': 59, 'jerry': 89, 'alice': 91}
+def create_dict_get_help():
+    # 定义字典
+    student = {'tom': 59, 'jerry': 89, 'alice': 91}
 
-# 获取元素
-print student['tom']
+    # 获取元素
+    print student['tom']
 
-# 获取元素，不存在，不进行报错
-print student.get('Bob')
-
-# 添加元素
-#   不存在 key进行添加
-#   存在 key进行修改
-student['dave'] = 78
-student['tom'] = 79
-print student
-
-# 删除元素
-print student.pop('tom')
-print student
-
-# 字典遍历
-#
-for key, value in student.items():
-    print key, value
-
-for key, value in enumerate(student):
-    print key, value
+    # 获取元素，不存在，不进行报错
+    print student.get('Bob')
 
 
-# 字典的用法之一：
-#
-proverb = '''
-One generation plants the trees, another gets the shade.
-A word once spoken can never be recalled.
-Beauty is in the eye of the beholder.
-Every dog has his day.
-A miss is as good as a mile.
-'''
+def add_element():
+    # 添加元素
+    #   不存在 key进行添加
+    #   存在 key进行修改
+    student = {'tom': 59, 'jerry': 89, 'alice': 91}
+    student['dave'] = 78
+    student['tom'] = 79
+    print student
+
+
+def delete_element_help():
+    # 删除元素
+    student = {'tom': 59, 'jerry': 89, 'alice': 91}
+    print student.pop('tom')
+    print student
+
+
+def Traversal_element_help():
+    # 字典遍历
+    #
+    student = {'tom': 59, 'jerry': 89, 'alice': 91}
+    for key, value in student.items():
+        print key, value
+
+    for key, value in enumerate(student):
+        print key, value
+
+
+def main():
+    delete_element_help()
+
 
 if __name__ == '__main__':
-    pass
+    main()

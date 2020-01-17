@@ -1,7 +1,10 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 高阶函数：map && reduce 的区别
 #
-#
+
 # 高阶函数主要是两个：map 与 reduce
 #  map(fn,lsd)：
 #       fn: 表示是一个函数名称；
@@ -40,14 +43,14 @@ def reduce_sum(fn):
 
 # map and reduce 通常是结合起来使用的
 # 例如：实现将字符串转换成为字面量数字
-def str2int(str):
+def str2int(string):
     def fc(x, y):
         return x * 10 + y
 
-    def fs(chr):
+    def fs(char):
         return {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}[chr]
 
-    return reduce(fc, map(fs, str))
+    return reduce(fc, map(fs, string))
 
 
 def main():

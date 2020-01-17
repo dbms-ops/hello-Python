@@ -1,5 +1,9 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 脚本用于处理文件，包括文件的读写操作；
+#
 
 #
 # 文件的操作是通过文件描述符来进行的
@@ -58,8 +62,13 @@ finally:
         file_handler.close()
 
 # 更简单的文件读取方式
-with open(path, 'r', encoding='utf-8') as file_handler:
+with open(path, 'r', encoding="utf-8") as file_handler:
     print file_handler.read()
 
-if __name__ == '__main__':
+
+def main():
     pass
+
+
+if __name__ == '__main__':
+    main()

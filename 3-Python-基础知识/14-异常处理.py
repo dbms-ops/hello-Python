@@ -1,5 +1,10 @@
 # -*-coding:utf-8-*-
-#!/data1/Python2.7/bin/python2.7
+# !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 异常处理
+
+
 # 异常处理：
 #   程序运行过程中遇到的会导致程序崩溃的异常；
 #   程序在运行过程跳过错误，继续向下执行；
@@ -21,13 +26,12 @@
 
 
 try:
-    print 4/0
-except (NameError,ZeroDivisionError):
+    print 4 / 0
+except (NameError, ZeroDivisionError):
     print "Error except"
 
-
 try:
-    print 4/0
+    print 4 / 0
 except ZeroDivisionError as e:
     print 'Error except'
 
@@ -49,17 +53,15 @@ except ZeroDivisionError as e:
 # 断言
 #   对于可能出现的错误进行预判
 
-def func(num,div):
-    assert (div !=0 ),"Div 不能为0"
+def func(num, div):
+    assert (div != 0), "Div 不能为0"
     return num / div
-func(12,3)
-func(12,0)
 
 
-
-
+def main():
+    func(12, 3)
+    func(12, 0)
 
 
 if __name__ == '__main__':
-    pass
-    
+    main()

@@ -1,10 +1,14 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 该文件是一个单元测试文件，用于测试 文件 1-函数单元测试，
+#              该文件是对于函数文件 func 进行单元测试；
 #
-# 该文件是一个单元测试文件，用于测试 文件 1-函数单元测试
-# 该文件是对于函数文件 func 进行单元测试
+
 
 import unittest
+
 from func import new_sub
 from func import new_sum
 

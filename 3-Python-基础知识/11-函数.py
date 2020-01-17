@@ -1,5 +1,9 @@
 # -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
+# date: 2020-1-16 16:57
+# user: Administrator
+# description: 函数的相关知识
+#
 
 
 # 代码模块化：
@@ -186,7 +190,9 @@ def outer(func):
     return inner
 
 
-#
+def main():
+    pass
+
 
 if __name__ == '__main__':
     pass

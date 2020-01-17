@@ -1,8 +1,11 @@
-#
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python27
+# !/data1/Python2.7/bin/python2.7
+# date: 2020/1/16 16:57
+# user: Administrator
+# description: 常见的运算符与表达式
 #
-#
+
+
 # 运算符与表达式
 
 #   +     -   *    /    %    **    //       =
@@ -24,9 +27,10 @@
 #       >>：二进制位数向右移动一定的位数
 #
 
+def Calculated_value():
+    print 5 & 7, 101 & 111, 1111111 & 10011011
+    print ~122, 13 << 2, 34 >> 2
 
-print 5 & 7, 101 & 111, 1111111 & 10011011
-print ~122, 13 << 2, 34 >> 2
 
 # 关系运算符与关系运算表达式
 # ==    !=  >   <   >=  <=
@@ -45,14 +49,17 @@ print ~122, 13 << 2, 34 >> 2
 #
 #
 
-if 1 and 2:
-    print True
 
-if 1 or 0:
-    print True
+def and_or_not():
+    if 1 and 2:
+        print True
 
-if not 0:
-    print True
+    if 1 or 0:
+        print True
+
+    if not 0:
+        print True
+
 
 # 成员运算符
 #   in：如果在序列中找到指定的值，返回True，否则返回False
@@ -75,5 +82,11 @@ if not 0:
 #       in not in
 # 短路原则：
 #   首先判断第一个表达式，如果第一个表达式可以得到，就不在判断后面的语句
-#
-#
+
+
+def main():
+    and_or_not()
+
+
+if __name__ == '__main__':
+    main()

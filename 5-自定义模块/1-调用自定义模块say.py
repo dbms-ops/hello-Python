@@ -1,9 +1,10 @@
-# coding=utf-8
+# -*-coding:utf-8-*-
+# !/data1/Python2.7/bin/python2.7
+# date: 2020/1/16 16:57
+# user: Administrator
+# description: 用与调用自定义模块
 #
-# 
-# !/data1/Python2.7/bin/python27
-# 
-#
+
 # 用于调用自定义模块 say
 #
 
