@@ -26,48 +26,80 @@
 #
 
 
-# 打开文件
-path = '/root/tmp/pycharm_project_179/test'
+def read_all(path):
+    # 打开文件
+    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(path, 'r')
 
-# file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-file_handler = open(path, 'r')
+    # 读取文件内容
+    # 1、读取文件的全部内容
+    file_handler.read()
+    file_handler.close()
 
-# 读取文件内容
-# 1、读取文件的全部内容
-file_handler.read()
 
-# 2、读取指定的字符数
-file_handler.read(10)
+def read_character(path):
+    # 打开文件
 
-# 3、读取整行，包括'\n'字符。
+    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(path, 'r')
+    # 2、读取指定的字符数
+    file_handler.read(10)
+    file_handler.close()
 
-# 读取一行中的指定字符数
-str_line = file_handler.readline(10)
 
-# 4、读取所有行，并且返回列表,n 表读取的行数，向上取整
-# 通常读取行数比较常见，很少有进行字符数的读取
-file_list = file_handler.readlines(10)
+def read_line(path):
+    # 打开文件
 
-# 修改文件描述符的位置
-file_handler.seek(10)
+    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(path, 'r')
+    # 3、读取整行，包括'\n'字符。
 
-# 关闭文件描述符
-file_handler.close()
+    # 读取一行中的指定字符数
+    str_line = file_handler.readline(10)
+    file_handler.close()
+
+
+def read_all_line():
+    path = '/root/tmp/pycharm_project_179/test'
+
+    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(path, 'r')
+    # 4、读取所有行，并且返回列表,n 表读取的行数，向上取整
+    # 通常读取行数比较常见，很少有进行字符数的读取
+    file_list = file_handler.readlines(10)
+
+    # 修改文件描述符的位置
+    file_handler.seek(10)
+
+    # 关闭文件描述符
+    file_handler.close()
+
+
 # 完整的文件读取过程
-try:
-    file_handler = open(path, 'r', encoding='utf-8')
-    print file_handler.read()
-finally:
-    if file_handler:
-        file_handler.close()
+def read_file_complete(path):
+    try:
+        file_handler = open(path, 'r', encoding='utf-8')
+        print file_handler.read()
+    finally:
+        if file_handler:
+            file_handler.close()
 
-# 更简单的文件读取方式
-with open(path, 'r', encoding="utf-8") as file_handler:
-    print file_handler.read()
+
+def file_read_simple(path):
+    # 更简单的文件读取方式
+    with open(path, 'r') as file_handler:
+        print file_handler.read()
+
+
+def Single_line_read(path):
+    with open(path, 'r') as file_handler:
+        while file_handler.readline():
+            print file_handler.readline()
 
 
 def main():
-    pass
+    path = "/etc/snmp/yyms_agent_db_scripts/db_6301.conf"
+    Single_line_read(path)
 
 
 if __name__ == '__main__':

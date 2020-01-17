@@ -1,7 +1,10 @@
-# coding=utf-8
+# -*-coding:utf-8-*-
+# !/data1/Python2.7/bin/python2.7
+# date: 2020/1/16 16:57
+# user: Administrator
+# description: 脚本用于实现多线程功能
 #
-#
-# !/data1/Python2.7/bin/python27
+
 # 多进程：
 #   进程是系统中程序执行和资源分配的基本单位，每个进程都有自己的数据段、代码段、和堆栈段；
 #   借助于multiprocessing实现多进程，本质上是一个跨平台的，在Linux和Windows上面都是可以实现的；
@@ -11,8 +14,8 @@
 #
 
 import multiprocessing
-import time
 import os
+import time
 
 
 # 子进程需要执行的代码
