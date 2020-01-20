@@ -8,11 +8,11 @@
 import os
 
 
-class Dbms():
+class Dbms(object):
     def __init__(self):
         pass
 
-    def lgInfo(self, type, port):
+    def lg_Info(self, type, port):
         """
         Username and password information for finding applications that need to log in
         :param type: Type of database,Supports a database that requires a password to log in and a service profile
