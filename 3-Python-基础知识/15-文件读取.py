@@ -9,7 +9,7 @@
 # 文件的操作是通过文件描述符来进行的
 #   文件的操作包括读文件、写文件
 #   读文件：
-#     打开文件：open(path,flag): 文件的打开方式，以及文件的打开标志
+#     打开文件：open(filePath,flag): 文件的打开方式，以及文件的打开标志
 #        flag：
 #         r：只读方式打开文件，文件描述符位于开头
 #         rb：以二进制格式打开文件，用于只读操作
@@ -26,10 +26,15 @@
 #
 
 
-def read_all(path):
+def read_all(file_path):
+    """
+    Read the entire contents of the file
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
     # 打开文件
-    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-    file_handler = open(path, 'r')
+    # file_handler = open(file_path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(file_path, 'r')
 
     # 读取文件内容
     # 1、读取文件的全部内容
@@ -37,21 +42,29 @@ def read_all(path):
     file_handler.close()
 
 
-def read_character(path):
+def read_character(file_path):
     # 打开文件
-
-    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-    file_handler = open(path, 'r')
+    """
+    Read the specified number of characters
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    # file_handler = open(file_path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(file_path, 'r')
     # 2、读取指定的字符数
     file_handler.read(10)
     file_handler.close()
 
 
-def read_line(path):
+def read_line(file_path):
     # 打开文件
-
-    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-    file_handler = open(path, 'r')
+    """
+    Read the specified number of characters in a line
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    # file_handler = open(file_path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(file_path, 'r')
     # 3、读取整行，包括'\n'字符。
 
     # 读取一行中的指定字符数
@@ -59,11 +72,14 @@ def read_line(path):
     file_handler.close()
 
 
-def read_all_line():
-    path = '/root/tmp/pycharm_project_179/test'
-
-    # file_handler = open(path,'r',encoding='utf-8',errors='ignore')
-    file_handler = open(path, 'r')
+def read_all_line(file_path):
+    """
+    Read all lines in file_path file
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    # file_handler = open(file_path,'r',encoding='utf-8',errors='ignore')
+    file_handler = open(file_path, 'r')
     # 4、读取所有行，并且返回列表,n 表读取的行数，向上取整
     # 通常读取行数比较常见，很少有进行字符数的读取
     file_list = file_handler.readlines(10)
@@ -76,30 +92,72 @@ def read_all_line():
 
 
 # 完整的文件读取过程
-def read_file_complete(path):
+def read_file_complete(file_path):
+    """
+    The complete process of file reading
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
     try:
-        file_handler = open(path, 'r', encoding='utf-8')
+        file_handler = open(file_path, 'r')
         print file_handler.read()
     finally:
         if file_handler:
             file_handler.close()
 
 
-def file_read_simple(path):
-    # 更简单的文件读取方式
-    with open(path, 'r') as file_handler:
+def file_read_simple(file_path):
+    """
+    The easiest way to read files
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    with open(file_path, 'r') as file_handler:
         print file_handler.read()
 
 
-def Single_line_read(path):
-    with open(path, 'r') as file_handler:
-        while file_handler.readline():
-            print file_handler.readline()
+def single_line_read_while(file_path):
+    """
+    Reading the contents of a file using a while loop
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    lineNum = 0
+    with open(file_path, 'r') as file_handler:
+        while True:
+            line = file_handler.readline()
+            if not line:
+                break
+            # 用于去掉文件末尾的换行符
+            print line.strip('\n')
+            lineNum += 1
+    print lineNum
+
+
+def single_line_read_for(file_path):
+    """
+    Reading the contents of a file using a for loop
+    :param file_path: File file_path, must exist
+    :return: No return value
+    """
+    lineNum = 0
+    with open(file_path, 'r') as file_handler:
+        for line in file_handler:
+            # 用于去掉末尾的换行
+            print line[0:-1]
+            lineNum += 1
+    print lineNum
+
+
+def list_line_read(file_path):
+    with open(file_path, 'r') as lineRead:
+        lineList = [line.strip('\n') for line in lineRead.readlines()]
+        print lineList
 
 
 def main():
-    path = "/etc/snmp/yyms_agent_db_scripts/db_6301.conf"
-    Single_line_read(path)
+    file_path = "/etc/snmp/yyms_agent_db_scripts/db_6301.conf"
+    single_line_read_while(file_path)
 
 
 if __name__ == '__main__':

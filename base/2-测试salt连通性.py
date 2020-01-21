@@ -3,14 +3,17 @@
 # date: 2020/1/20 18:10
 # user: Administrator
 # description: 脚本用于测试 salt 远程调用的连通性
-# 
+#
+
 import argparse
 import commands
 import os
-import sys
 
-reload(sys)
-sys.setdefaultencoding("utf-8")
+
+# import sys
+
+# reload(sys)
+# sys.setdefaultencoding("utf-8")
 
 
 def testSalt(filename):
@@ -25,9 +28,12 @@ def testSalt(filename):
         failed = 0
         successful = 0
         with open(absPath, 'r') as file_handler:
-            while file_handler.readline():
-                serverId = file_handler.readline()
-                saltCommands = "/data1/Python-2.7.4/bin/salt 'minion_{}' test.ping ".format(serverId[0:-1])
+            while True:
+                # Remove trailing newlines
+                serverId = file_handler.readline().strip('\n')
+                if not serverId:
+                    break
+                saltCommands = "/data1/Python-2.7.4/bin/salt 'minion_{}' test.ping ".format(serverId)
                 status, output = commands.getstatusoutput(saltCommands)
                 if not status:
                     print "server_id: {} test successful".format(serverId[0:-1])
@@ -42,9 +48,9 @@ def testSalt(filename):
 
 def main():
     os.environ["PATH"] = "/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin"
-    parser = argparse.ArgumentParser(prog="salt-test", version="1.0", description='test salt command',
-                                     epilog="writter：copywrite")
-    parser.add_argument('file', type=str, help='the file which content server_id information')
+    parser = argparse.ArgumentParser(prog="salt-test", usage="test salt and run ping command",
+                                     description='test salt command', epilog="version: 1.0")
+    parser.add_argument('file', help='the file which content server_id information')
     args = parser.parse_args()
     filename = args.file
     print filename
