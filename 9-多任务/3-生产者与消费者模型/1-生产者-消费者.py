@@ -10,7 +10,7 @@ import time
 
 
 def producer(i, q):
-    while True:
+    for I in range(10):
         num = random.randint(0, 1000)
         q.put(num)
         print "producer: {} product {} put in queue".format(i, num)
@@ -21,9 +21,10 @@ def producer(i, q):
 
 def customer(i, q):
     while True:
-        item = q.get()
-        if item is None:
+        if q.qsize() == 0:
             break
+        item = q.get(block=True, timeout=2)
+        print item
         print 'customer:{} custom {}'.format(i, item)
         time.sleep(0.3)
 
@@ -32,10 +33,16 @@ def main():
     # 创建消息队列
     q = Queue.Queue()
     # 启动生产者
-    for I in range(4):
-        threading.Thread(target=customer, args=(I, q)).start()
-        threading.Thread(target=producer, args=(I, q)).start()
+    produce = threading.Thread(target=producer, args=(1, q))
+    produce.start()
 
+    time.sleep(2)
+    custome = threading.Thread(target=customer, args=(1, q))
+    custome.start()
+
+    produce.join(timeout=1)
+    custome.join(timeout=1)
+    exit(0)
 
 if __name__ == '__main__':
     main()

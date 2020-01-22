@@ -8,14 +8,17 @@
 import pymysql
 
 
-def insert_data():
-    db = pymysql.connect(('IP', 'port', 'user', 'password'))
+def connect_db():
+    db = pymysql.connect('183.36.110.112', '6311', 'westos', 'westos')
     cursor = db.cursor()
     cursor.execute('select version();')
+    result = cursor.fetchone()[0]
+    db.commit()
+    print str(result).startswith('5.1')
 
 
 def main():
-    pass
+    connect_db()
 
 
 if __name__ == "__main__":
