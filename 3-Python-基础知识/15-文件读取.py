@@ -155,6 +155,34 @@ def list_line_read(file_path):
         print lineList
 
 
+def big_file_read_chunck(fileObj, chunck_size):
+    """
+    Coroutines to read files according to block size
+    :param fileObj: File descriptor
+    :param chunck_size: Block size per read
+    :return: Returns the data read each time
+    """
+    while True:
+        data = fileObj.read(chunck_size)
+        if not data:
+            break
+        yield data
+
+
+def big_file_read_line(fileObj):
+    """
+    Coroutines to read files according to block size
+    :param fileObj: File descriptor
+    :param chunck_size: Block size per read
+    :return: Returns the data read each time
+    """
+    while True:
+        data = fileObj.readline()
+        if not data:
+            break
+        yield data
+
+
 def main():
     file_path = "/etc/snmp/yyms_agent_db_scripts/db_6301.conf"
     single_line_read_while(file_path)

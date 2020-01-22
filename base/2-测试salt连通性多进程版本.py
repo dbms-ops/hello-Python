@@ -11,7 +11,7 @@ import os
 import threading
 
 
-def read_server_id(file_path, server_id_queue):
+def read_server_id(file_path):
     absPath = os.path.abspath('.') + '/' + file_path
     if os.path.exists(absPath):
         with open(absPath, 'r') as file_handler:
@@ -20,39 +20,36 @@ def read_server_id(file_path, server_id_queue):
                 serverId = file_handler.readline().strip('\n')
                 if not serverId:
                     break
-                server_id_queue.put(serverId)
+                yield serverId
     else:
         print "no such file {}".format(absPath)
 
 
-def run_salt_test(i, server_id_queue):
+def run_salt_test(i, server_id_queue, successful, failed):
     while True:
-        server_id = server_id_queue.get()
-        if server_id is None:
+        try:
+            server_id = server_id_queue.get(block=True, timeout=3)
+        except Queue.Empty:
             break
         saltCommands = "/data1/Python-2.7.4/bin/salt 'minion_{}' test.ping ".format(server_id)
         status, output = commands.getstatusoutput(saltCommands)
         if not status:
+            successful += 1
             print "thread id: {} server_id: {} test successful".format(i, server_id[0:-1])
         else:
+            failed += 1
             print "thread_id: {} server_id: {} test failed".format(i, server_id[0:-1])
+    print "summary: succeeded:{} failed:{}".format(successful, failed)
 
 
 def thread_start(filename):
     q = Queue.Queue()
-    read_end = threading.Thread(target=read_server_id, args=(filename, q))
-    read_end.start()
-    salt_test_1 = threading.Thread(target=run_salt_test, args=(1, q))
-    salt_test_2 = threading.Thread(target=run_salt_test, args=(2, q))
-    salt_test_3 = threading.Thread(target=run_salt_test, args=(3, q))
-    salt_test_1.start()
-    salt_test_2.start()
-    salt_test_3.start()
-    salt_test_1.join(timeout=1)
-    salt_test_2.join(timeout=1)
-    salt_test_3.join(timeout=1)
-    read_end.join(timeout=1)
-    exit(0)
+    for server_id in read_server_id(filename):
+        q.put(server_id, block=True, timeout=1)
+    successful = 0
+    failed = 0
+    for I in range(3):
+        threading.Thread(target=run_salt_test, args=(I, q, successful, failed))
 
 
 def main():
@@ -60,7 +57,7 @@ def main():
     parser = argparse.ArgumentParser(prog="salt-test", usage="test salt and run ping command",
                                      description='test salt command', epilog="version: 1.0")
     parser.add_argument('file', help='the file which content server_id information')
-    args = parser.parse_args()
+    args = parser.parse_args(['server_id'])
     filename = args.file
     thread_start(filename)
 
