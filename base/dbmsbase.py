@@ -6,13 +6,14 @@
 #
 
 import os
+import socket
+import commands
+import re
 
 
 class Dbms(object):
-    def __init__(self):
-        pass
 
-    def lg_Info(self, type, port):
+    def lg_user_passwd(self, db_type, port):
         """
         Username and password information for finding applications that need to log in
         :param type: Type of database,Supports a database that requires a password to log in and a service profile
@@ -21,24 +22,46 @@ class Dbms(object):
         :return: Returns a dictionary containing usernames and passwords;
         """
         login = {'user': '', 'password': ''}
-        filepath = "".format(type, port)
+        filepath = "".format(db_type, port)
         if os.path.exists(filepath):
             with open(filepath, 'r') as fread:
-                while fread.readline():
+                while True:
                     line = fread.readline()
                     if line.startswith('user'):
                         login['user'] = line.split('=')[1][0:-1]
                     if line.startswith('password'):
                         login['password'] = line.split('=')[1][0:-1]
                         return login
-        return None
+
+    def port_is_listen(self, ip, port, timeout=10):
+        """
+        Function used to verify whether the port is listening.
+        :param ip: IP address of the host.
+        :param port: Port number of the host.
+        :param timeout: Timeout for connection attempt. The default is 10 seconds.
+        :return: Returns true if the port is listening, otherwise returns false.
+        """
+        sk = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sk.settimeout(timeout)
+        try:
+            sk.connect((ip, port))
+            sk.close()
+            return True
+        except:
+            return False
+
+    def write_file_append(self, file_path, content):
+        pass
+
+    def run_command(self, command):
+        status, output = commands.getstatusoutput(command)
+        return {'status': status, 'output': re.split(r'[\t\n\r\f\v]', output)}
+
 
 
 def main():
-    mysql = Dbms()
-    result = mysql.lgInfo('db', 6302)
-    print result['user']
-    print result['password']
+    db = Dbms()
+    print db.run_command('netstat -ntl | grep 3306')
 
 
 if __name__ == '__main__':

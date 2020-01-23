@@ -33,15 +33,15 @@ def main():
     # 创建消息队列
     q = Queue.Queue()
     # 启动生产者
-    produce = threading.Thread(target=producer, args=(1, q))
-    produce.start()
+    producer_1 = threading.Thread(target=producer, args=(1, q))
+    producer_1.start()
 
     time.sleep(2)
-    custome = threading.Thread(target=customer, args=(1, q))
-    custome.start()
+    customer_1 = threading.Thread(target=customer, args=(1, q))
+    customer_1.start()
 
-    produce.join(timeout=1)
-    custome.join(timeout=1)
+    producer_1.join(timeout=1)
+    customer_1.join(timeout=1)
     exit(0)
 
 
