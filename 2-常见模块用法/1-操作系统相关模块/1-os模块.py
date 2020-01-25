@@ -60,8 +60,8 @@ os.rename('./temp/a/b', './temp/a/c')
 # 删除普通文件
 os.remove("./temp/a/b")
 
-
-
+# 用于处理连接文件，判断 path 所链接的文件是否存在
+os.path.lexists('./temp/a/b.txt')
 
 # 返回指定目录下所有文件
 print os.listdir("/root/script/tmp")

@@ -22,7 +22,7 @@ class Dbms(object):
         :return: Returns a dictionary containing usernames and passwords;
         """
         login = {'user': '', 'password': ''}
-        filepath = "".format(db_type, port)
+        filepath = "/ /etc/snmp/yyms_agent_{}_scripts/mongo_{}.conf".format(db_type, port)
         if os.path.exists(filepath):
             with open(filepath, 'r') as fread:
                 while True:
@@ -58,10 +58,11 @@ class Dbms(object):
         return {'status': status, 'output': re.split(r'[\t\n\r\f\v]', output)}
 
 
-
 def main():
     db = Dbms()
     print db.run_command('netstat -ntl | grep 3306')
+    mysql_log_in = Dbms()
+    mysql_log_in.lg_user_passwd('db', 6301)
 
 
 if __name__ == '__main__':
