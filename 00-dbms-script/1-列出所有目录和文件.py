@@ -1,7 +1,9 @@
+#
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python2.7
-#
-#
+# !/data1/Python2.7/bin/python27
+# time: 2020-01-24 10:21
+# user: linux
+# description: 通过递归，深度遍历，广度遍历等方式实现递归查找所有的文件的目录
 # 
 import os
 import collections

@@ -1,10 +1,9 @@
-# coding=utf-8
 #
-# 
+# -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python27
-# 
-#
-# 用于测试简单的argparse
+# time: 2020-01-24 10:21
+# user: linux
+# description: 用于测试简单的 argparse 模块功能
 #
 import sys
 import argparse
