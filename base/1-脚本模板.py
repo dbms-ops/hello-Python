@@ -34,7 +34,8 @@ def toJson(msg, simple=True):
 
 def lg(msg, level=1):
     if isinstance(msg, tuple): msg = list(msg)
-    if isinstance(msg, dict) or isinstance(msg, list): msg = toJson(msg)
+    if isinstance(msg, dict) or isinstance(msg, list):
+        msg = toJson(msg)
     if level == 1:
         log.info(msg)
     elif level == 0:

@@ -59,34 +59,47 @@
 #
 
 import logging
-
-# 配置日志的输入格式，支持自己制定字符串
-#LOG_FORMAT = "num: %(lineno)d :- %(asctime)s - %(levelname)s - %(message)s"
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(user)s[%(ip)s] - %(message)s"
-# 设置时间格式
-DATE_FORMAT = "%m-%d-%Y %H:%M:%S %p"
-# DATE_FORMAT = '%Y-%m-%d %H:%M:%S '
-logging.basicConfig(filename="/root/Mysql-6379.log", filemode="a", datefmt=DATE_FORMAT, format=LOG_FORMAT,
-                    level=logging.DEBUG)
-# logging.log(logging.ERROR, "This is a ERROR log")
-logging.DEBUG()
+import sys
 
 
-# 底下的代码和上面代码分开执行
-# 2.7支持extra属性但是不支持exc_info、stack_info两个属性
-
-LOG_FORMAT = "%(asctime)s - %(levelname)s - %(user)s [%(ip)s] - %(message)s"
-DATE_FORMAT = "%m/%d/%Y %H:%M:%S %p"
-
-logging.basicConfig(format=LOG_FORMAT, datefmt=DATE_FORMAT)
-logging.warning("Some one delete the log file.", extra={'user': 'Tom', 'ip': '47.98.53.222'})
-
-logging.DEBUG()
-
-#
+def logging_print_warning():
+    # 默认的只有在大于warning的级别的日志才会被输出
+    logging.debug("This is a debug log.")
+    logging.info("This is a info log.")
+    logging.log(logging.DEBUG, "This is a debug log.")
+    logging.warning("This is a warning log.")
+    logging.error("This is a error log.")
+    logging.critical("This is a critical log.")
 
 
+def logging_print_set():
+    # 设置日志的打印级别，设置为DEBUG,在DEBUG级别之上的日志都会被输出
+    log_format = "%(asctime)s %(created)f %(relativeCreated)d %(msecs)d	%(levelname)s %(levelno)s %(name)s %(message)s	" \
+                 "%(pathname)s	%(filename)s %(module)s	%(lineno)d	%(funcName)s %(process)d %(thread)d	%(thread)s	"
+    logging.basicConfig(format=log_format, level=logging.DEBUG)
+    logging.info("This is a info log.")
+    logging.log(logging.DEBUG, "This is a debug log.")
+    logging.warning("This is a warning log.")
+    logging.error("This is a error log.")
+    logging.critical("This is a critical log.")
+
+
+def logging_print_set_file():
+    # 设置日志的输出文件等信息
+    filename = '/home/python/test.log'
+    log_format = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
+    DATE_FORMAT = "%Y-%m-%d  %H:%M:%S %p"
+    logging.basicConfig(filename=filename, filemode='a', format=log_format, level=logging.DEBUG, datefmt=DATE_FORMAT)
+    logging.basicConfig(format=log_format, level=logging.DEBUG)
+    logging.info("This is a info log.")
+    logging.log(logging.DEBUG, "This is a debug log.")
+    logging.warning("This is a warning log.")
+    logging.error("This is a error log.")
+    logging.critical("This is a critical log.")
+
+
+def main():
+    logging_print_set_file()
 
 if __name__ == '__main__':
-    pass
-
+    main()
