@@ -117,6 +117,8 @@ def print_keyword():
 #   内建作用域：
 
 def main():
+    print_string()
+    print_input()
     print_keyword()
 
 

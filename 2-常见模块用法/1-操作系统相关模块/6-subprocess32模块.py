@@ -115,8 +115,18 @@ def run_test():
     print result.stdout
 
 
+def block_call():
+    result = subprocess32.run(['sleep', '3'])
+    print result
+    print "1 2 3 4 5 "
+
+
+def no_block_call():
+    pass
+
+
 def main():
-    run_test()
+    block_call()
 
 
 if __name__ == '__main__':

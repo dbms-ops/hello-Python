@@ -22,7 +22,7 @@ class Dbms(object):
         :return: Returns a dictionary containing usernames and passwords;
         """
         login = {'user': '', 'password': ''}
-        filepath = "/ /etc/snmp/yyms_agent_{}_scripts/mongo_{}.conf".format(db_type, port)
+        filepath = "/etc/snmp/yyms_agent_{}_scripts/mongo_{}.conf".format(db_type, port)
         if os.path.exists(filepath):
             with open(filepath, 'r') as fread:
                 while True:

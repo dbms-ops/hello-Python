@@ -8,6 +8,7 @@
 
 import argparse
 
+
 def parser_simple():
     # 创建一个参数解析实例
     # 传递命令行参数：
@@ -20,6 +21,7 @@ def parser_simple():
 
     parser = argparse.ArgumentParser()
     parser.parse_args()
+
 
 def add_positional():
     # 定义一个位置参数
@@ -35,10 +37,12 @@ def add_positional():
     # foo
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('name',help="please input your name")
+    parser.add_argument('name', help="please input your name")
+    parser.add_argument('age', help='please in put you age')
     args = parser.parse_args()
     print type(args)
-    print args.__dict__['name'] # 这里使用字典获取对应的参数以及其值
+    print args.__dict__['name']  # 这里使用字典获取对应的参数以及其值
+    print args.__dict__['age']
 
 
 def positional_square():
@@ -47,10 +51,10 @@ def positional_square():
     #   123454321
     #
     parser = argparse.ArgumentParser()
-    parser.add_argument('square',help="display a square of a given number",type=int)
+    parser.add_argument('square', help="display a square of a given number", type=int)
     args = parser.parse_args()
     print args.square ** 2
-    print args.__str__() # 通过字符串获取其值
+    print args.__str__()  # 通过字符串获取其值
     print args.__dict__  # 通过字典获取其值
 
 
@@ -66,7 +70,7 @@ def add_optional():
     #   1、使用--verbosity必须制定一些值
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--verbosity",help="increase output verbosity")
+    parser.add_argument("--verbosity", help="increase output verbosity")
     args = parser.parse_args()
     if args.verbosity:
         print "verbosity turned on"
@@ -84,13 +88,12 @@ def verbosity_store_true():
     #
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--verbose",help="increase output verbosity",
+    parser.add_argument("--verbose", help="increase output verbosity",
                         action="store_true")
     args = parser.parse_args()
     if args.verbose:
         print "verbosity turned on"
     print args.verbose
-
 
 
 def add_sub_options_optional():
@@ -103,14 +106,14 @@ def add_sub_options_optional():
     #   -h, --help     show this help message and exit
     #   -v, --verbose  increase output verbosity
 
-
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v","--verbose",help="increase output verbosity",
+    parser.add_argument("-v", "--verbose", help="increase output verbosity",
                         action="store_true")
     args = parser.parse_args()
     if args.verbose:
         print "verbosity turned on"
     print args.verbose
+
 
 def store_true():
     # 结合位置参数和可选参数的输出
@@ -123,12 +126,11 @@ def store_true():
     #   1、注意顺序无关紧要
     #   2、
 
-
     parser = argparse.ArgumentParser()
-    parser.add_argument("square", type=int,help="display a square of a given number")
+    parser.add_argument("square", type=int, help="display a square of a given number")
     parser.add_argument("-v", "--verbose", action="store_true", help="increase output verbosity")
     args = parser.parse_args()
-    answer = args.square**2
+    answer = args.square ** 2
     if args.verbose:
         print "the square of {} equals {}".format(args.square, answer)
     else:
@@ -148,14 +150,13 @@ def squre_simple():
     #    usage: 8-argparse模块.py [-h] [-v {0,1,2}] square
     #    8-argparse模块.py: error: argument -v/--verbosity: invalid choice: 12choose from 0, 1, 2)
 
-
     parser = argparse.ArgumentParser()
     parser.add_argument("square", type=int,
                         help="display a square of a given number")
-    parser.add_argument("-v", "--verbosity", type=int,choices=[0,1,2],
+    parser.add_argument("-v", "--verbosity", type=int, choices=[0, 1, 2],
                         help="increase output verbosity")
     args = parser.parse_args()
-    answer = args.square**2
+    answer = args.square ** 2
     if args.verbosity == 2:
         print "the square of {} equals {}".format(args.square, answer)
     elif args.verbosity == 1:
@@ -164,7 +165,6 @@ def squre_simple():
         print answer
     print args.__dict__
     print args.__str__()
-
 
 
 def verbosity_and_count():
@@ -179,10 +179,10 @@ def verbosity_and_count():
     parser = argparse.ArgumentParser()
     parser.add_argument("square", type=int,
                         help="display the square of a given number")
-    parser.add_argument("-v", "--verbosity", action="count",default=0,
+    parser.add_argument("-v", "--verbosity", action="count", default=0,
                         help="increase output verbosity")
     args = parser.parse_args()
-    answer = args.square**2
+    answer = args.square ** 2
     if args.verbosity >= 2:
         print "the square of {} equals {}".format(args.square, answer)
     elif args.verbosity >= 1:
@@ -205,7 +205,7 @@ def squre_and_verbosity():
     parser.add_argument("-v", "--verbosity", action="count", default=0,
                         help="show the result of x^y")
     args = parser.parse_args()
-    answer = args.x**args.y
+    answer = args.x ** args.y
     if args.verbosity >= 2:
         print "Running '{}'".format(__file__)
     if args.verbosity >= 1:
@@ -217,12 +217,6 @@ def squre_and_verbosity():
     #   对于位置参数：通过args.x 直接获取
     #   对于可选参数：通过args.常选项名来获取参数结果
     print args.x, args.y, args.verbosity
-
-
-
-
-
-
 
 
 def add_mutually_exclusive():
@@ -251,11 +245,9 @@ def add_mutually_exclusive():
         print "{}^{} == {}".format(args.x, args.y, answer)
     print args
 
+
 def main():
-    add_mutually_exclusive()
-
-
-
+    add_positional()
 
 if __name__ == '__main__':
     main()

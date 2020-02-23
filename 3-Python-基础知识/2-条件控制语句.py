@@ -51,13 +51,13 @@ def True_or_Fales():
 
 # 判断传递的参数为真还是为假
 
-def true_or_false(argument):
+def true_or_false(argu):
     """
 
-    :param argument:
+    :param argu: Receive a parameter to determine true and false
     :return:
     """
-    if argument:
+    if argu:
         print "true"
     else:
         print "fasle"
@@ -97,6 +97,7 @@ def Multi_if():
 
 def main():
     Multi_if()
+    True_or_Fales()
 
 
 if __name__ == '__main__':

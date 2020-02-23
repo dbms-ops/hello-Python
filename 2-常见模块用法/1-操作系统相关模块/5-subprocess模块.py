@@ -22,8 +22,7 @@ def call_help():
 
 def check_call_help():
     # 执行命令，返回结果和状态，正常为0；执行错误则抛出异常
-    subprocess.check_call(['lm', '-l'])
-
+    ps = subprocess.check_call(['lm', '-l'])
 
 def getstatusoutput_help():
     # 3接受字符串形式的命令，返回一个元组形式的结果：第一个元素是状态码，第二个为执行结果

@@ -14,7 +14,7 @@ def create_list():
     # 列表中的元素类型是不进行限制的
     """
 
-    :return:
+    :return: return None
     """
     address = ['GZ', 'HK', 'XA', 'BJ', 'SH', 1, 2, 3, ['Shanghai', 'Beijing'], (1, 2, 3)]
 

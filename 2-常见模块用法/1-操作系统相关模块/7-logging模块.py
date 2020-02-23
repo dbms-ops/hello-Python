@@ -86,7 +86,7 @@ def logging_print_set():
 
 def logging_print_set_file():
     # 设置日志的输出文件等信息
-    filename = '/home/python/test.log'
+    filename = '/data/dba_logs/script/adm_mysql_logfile.log'
     log_format = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
     DATE_FORMAT = "%Y-%m-%d  %H:%M:%S %p"
     logging.basicConfig(filename=filename, filemode='a', format=log_format, level=logging.DEBUG, datefmt=DATE_FORMAT)

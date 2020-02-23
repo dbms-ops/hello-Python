@@ -40,7 +40,7 @@ def swap_case_help():
 
 def capitalize_help():
     # capitalize(): 保持首字母大写，其他的都是小写
-    str2 = " A gOOd beGiNiNg iS HalF DonE "
+    str2 = "A gOOd beGiNiNg iS HalF DonE "
     print str2.capitalize()
 
 
@@ -303,12 +303,19 @@ def isspace_help():
     print '\r'.isspace()
 
 
+def string_rtrip_help():
+    comment_string = "10.21.34.232"
+    print comment_string.rstrip(".34.232")
+
+
+def string_ltrip_help():
+    comment_string = "10.21.34.232"
+    print comment_string.lstrip("10.21.")
+
+
 def main():
-    pass
+    string_ltrip_help()
 
 
 if __name__ == '__main__':
     main()
-
-if __name__ == '__main__':
-    pass
