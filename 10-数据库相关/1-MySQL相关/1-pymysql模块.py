@@ -1,9 +1,9 @@
-#
+#!/data1/Python-2.7.4/bin/python2.7
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python27
-# time: 2020-01-18 18:13 
+# time: 2020-02-16 19:24
 # user: linux
-# description: pymysql 模块的使用
+# description: 测试MySQL连接
+#
 #
 # config = {
 #           'host':'127.0.0.1',
@@ -19,35 +19,29 @@
 #
 import pymysql
 
-
-def connect_db():
-    db = pymysql.connect(host='127.0.0.1', port='6301', user='db_monitor', password='6ZCdJ5zzh6')
-    cursor = db.cursor()
-    cursor.execute('select version();')
-    result = cursor.fetchone()[0]
-    db.commit()
-    print result
+login = {'password': '6ZCdJ5zzh6', 'user': 'db_monitor'}
 
 
-def query():
-    global db_connect
+def query(sql):
+    result = 1
+    databaseQuery = pymysql.connect(host='127.0.0.1',
+                                    port=6301,
+                                    user=login['user'],
+                                    password=login['password']
+                                    )
     try:
-        db_connect = pymysql.connect(host='127.0.0.1',
-                                     user='',
-                                     password='',
-                                     charset='utf8mb4',
-                                     cursorclass=pymysql.cursors.DictCursor)
-        with db_connect.cursor() as cursor:
-            sql = 'select version()'
-            cursor.execute(sql)
-            db_connect.commit()
+        with databaseQuery.cursor() as databaseQueryCursor:
+            databaseQueryCursor.execute(sql)
+            result = databaseQueryCursor.fetchall()
     finally:
-        db_connect.close()
-
+        databaseQuery.close()
+        return result
 
 
 def main():
-    connect_db()
+    result = query(
+        'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update","Com_delete","Uptime");')
+    print result
 
 
 if __name__ == "__main__":

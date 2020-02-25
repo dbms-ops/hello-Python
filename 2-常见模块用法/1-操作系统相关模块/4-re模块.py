@@ -152,9 +152,13 @@ def re_replace_help():
     pass
 
 
+def re_num():
+    print re.match(r'[1-9][0-9]{3,}', '6301').group()
+
+
 # next name
 def main():
-    re_finditer_help()
+    re_num()
 
 
 if __name__ == '__main__':

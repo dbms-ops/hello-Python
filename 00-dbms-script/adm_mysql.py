@@ -4,121 +4,118 @@
 # user: linux
 # description: 用于管理MySQL的几个常见的工具
 #
-import os
-from time import sleep
-import pymysql
 import commands
-import subprocess32
 import json
 import logging
+import os
 import sys
+from time import sleep
+
+import pymysql
+import subprocess32
 
 
-def base_log(level="debug", log_file=None):
-    log_level = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
-                 "warning": logging.WARNING, "critical": logging.CRITICAL}
-    log_format = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
-    DATE_FORMAT = "%Y-%m-%d  %H:%M:%S %p"
+def baseLogging(level="debug", log_file=None):
+    loggingLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
+                    "warning": logging.WARNING, "critical": logging.CRITICAL}
+    loggingFormat = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
+    dataFormat = "%Y-%m-%d  %H:%M:%S %p"
     if log_file is None:
         logging.StreamHandler(sys.stderr)
     else:
-        logging.basicConfig(filename=log_file, filemode='a', format=log_format, level=log_level[level],
-                            datefmt=DATE_FORMAT)
+        logging.basicConfig(filename=log_file, filemode='a+', format=loggingFormat, level=loggingLevel[level],
+                            datefmt=dataFormat)
     return logging
 
 
-def base_lg(msg, level='info', to_json=False):
-    log_level = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
-                 "warning": logging.WARNING, "critical": logging.CRITICAL}
+def logMsg(logMessage, level='info', to_json=False):
+    logLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
+                "warning": logging.WARNING, "critical": logging.CRITICAL}
     if not to_json:
-        lg.log(log_level[level], msg)
+        lg.log(logLevel[level], logMessage)
     else:
-        if isinstance(msg, dict) or isinstance(msg, list):
-            lg.log(log_level[level], json.dumps(msg, ensure_ascii=False, indent=2, separators=[",", ":"]))
+        if isinstance(logMessage, dict) or isinstance(logMessage, list):
+            lg.log(logLevel[level], json.dumps(logMessage, ensure_ascii=False, indent=2, separators=[",", ":"]))
         else:
-            lg.log(log_level[level], msg)
+            lg.log(logLevel[level], logMessage)
 
 
-def base_prepare(port):
-    login = {'user': '', 'password': ''}
-    db_path = '/etc/snmp/yyms_agent_db_scripts/db_{}.conf'.format(port)
-    base_lg('db_path:{}'.format(db_path), level='debug')
-    if os.path.exists(db_path):
-        with open(db_path, 'r') as fread:
+def getUserPass(databasePort):
+    loginfo = {'user': '', 'password': ''}
+    databasePath = '/etc/snmp/yyms_agent_db_scripts/db_{}.conf'.format(databasePort)
+    logMsg('databasePath:{}'.format(databasePath), level='debug')
+    if os.path.exists(databasePath):
+        with open(databasePath, 'r') as fread:
             while True:
                 line = fread.readline()
                 if line.startswith('user'):
-                    login['user'] = line.split('=')[1][0:-1]
+                    loginfo['user'] = line.split('=')[1][0:-1]
                 if line.startswith('password'):
-                    login['password'] = line.split('=')[1][0:-1]
-                    base_lg('return login:{} successful'.format(login), level='debug')
-                    return login
+                    loginfo['password'] = line.split('=')[1][0:-1]
+                    logMsg('return login:{} successful'.format(loginfo), level='debug')
+                    return loginfo
     else:
-        base_lg('no such file {}'.format(db_path), level='error')
+        logMsg('no such file {}'.format(databasePath), level='error')
 
 
-def query(port, statement):
-    global result
-    db_query = pymysql.connect(host='127.0.0.1',
-                               port=port,
-                               user=login['user'],
-                               password=login['password'],
-                               db='db',
-                               charset='utf8mb4',
-                               )
-    base_lg("connect info: {}".format(db_query), level='debug')
+def databaseHostQuery(databasePort, sql):
+    queryResult = 1
+    databaseQuery = pymysql.connect(host='127.0.0.1',
+                                    port=int(databasePort),
+                                    user=login['user'],
+                                    password=login['password']
+                                    )
     try:
-        with db_query.cursor() as db_query_cursor:
-            sql = statement
-            base_lg('run sql: {}'.format(sql), level='debug')
-            result = db_query_cursor.execute(sql)
-            base_lg('log result: {} '.format(result), level='debug')
+        with databaseQuery.cursor() as databaseQueryCursor:
+            databaseQueryCursor.execute(sql)
+            queryResult = databaseQueryCursor.fetchall()
     finally:
-        db_query.close()
-        return result
+        databaseQuery.close()
+        return queryResult
 
 
-def insert(port, statement):
-    global result
-    db_insert = pymysql.connect(host='127.0.0.1',
-                                port=port,
-                                user=login['user'],
-                                password=login['password'],
-                                db='db',
-                                charset='utf8mb4'
-                                )
-    base_lg('connect info: {}'.format(db_insert), level='debug')
+def databaseHostInsert(port, statement):
+    insertResult = 1
+    databaseInsert = pymysql.connect(host='127.0.0.1',
+                                     port=port,
+                                     user=login['user'],
+                                     password=login['password'],
+                                     db='db',
+                                     charset='utf8mb4'
+                                     )
+    logMsg('connect info: {}'.format(databaseInsert), level='debug')
     try:
-        with db_insert.cursor() as db_query_cursor:
+        with databaseInsert.cursor() as databaseInsertCursor:
             sql = statement
-            base_lg('start run sql: {}'.format(sql))
-            db_query_cursor.execute(sql)
-            base_lg("end run sql: {}".format(sql))
-            db_insert.commit()
+            logMsg('start run sql: {}'.format(sql))
+            databaseInsertCursor.execute(sql)
+            logMsg("end run sql: {}".format(sql))
+            databaseInsert.commit()
     finally:
-        db_insert.close()
-        return result
+        databaseInsert.close()
+        return insertResult
 
 
-def status(port):
-    log_file = "/tmp/mysql-{}.log".format(port)
-    base_lg('log sql run result to: {}'.format(logfile), level='debug')
-    sql = "SELECT  r.trx_id as locked_trx, r.trx_query as locked_sql, b.trx_id as block_id, b.trx_query as block_sql, " \
-          "b.trx_mysql_thread_id as block_thread, b.trx_started as block_start_time " \
-          "FROM(information_schema.innodb_lock_waits w INNER JOIN information_schema.innodb_trx b " \
+def databaseStatus(databasePort):
+    statusLogFile = "/tmp/mysql-{}.log".format(databasePort)
+    logMsg('log sql run result to: {}'.format(logfile), level='debug')
+    sql = "SELECT  r.trx_id as locked_trx, r.trx_query as locked_sql, b.trx_id as block_id, b.trx_query " \
+          "AS block_sql, b.trx_mysql_thread_id as block_thread, b.trx_started " \
+          "AS block_start_time FROM(information_schema.innodb_lock_waits w " \
+          "INNER JOIN information_schema.innodb_trx b " \
           "ON b.trx_id = w.blocking_trx_id) INNER JOIN information_schema.innodb_trx r " \
           "ON r.trx_id = w.requesting_trx_id ORDER BY b.trx_started DESC ;"
-    base_lg('start run sql: {}'.format(sql))
-    upshot = query(port, sql)
-    with open(log_file, 'w+') as fwrite:
-        start_log = 'MySQL {} deadlock log start\n'.format(port).upper().center(114, '#')
-        fwrite.write(start_log)
-        fwrite.write(upshot)
+    logMsg('start run sql: {}'.format(sql), level='debug')
+    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
+    with open(statusLogFile, 'w+') as fwrite:
+        headInformation = 'MySQL {} deadlock log start\n'.format(databasePort).upper().center(114, '#')
+        fwrite.write(headInformation)
+        fwrite.write(databaseQueryUpshot)
 
     sql = 'select @@performance_schema'
-    performance = query(port, sql)
+    performance = databaseHostQuery(databasePort, sql)
     if performance:
-        sql = "SELECT trx.trx_mysql_thread_id thread_id, prl.host, prl.user, trx.trx_id, trx.trx_started, prl.time, " \
+        sql = "SELECT  trx.trx_mysql_thread_id  thread_id, prl.host, prl.user, trx.trx_id, trx.trx_started, prl.time, " \
               "prl.db current_db, trx.trx_query current_sql, trx.trx_state, thd.processlist_command command, " \
               "last.current_schema last_db, last.sql_text last_sql FROM information_schema.innodb_trx trx " \
               "STRAIGHT_JOIN performance_schema.threads thd ON trx.trx_mysql_thread_id=thd.processlist_id " \
@@ -130,46 +127,47 @@ def status(port):
               "prl.state, trx.trx_state, trx.trx_query from information_schema.innodb_trx trx straight_join " \
               "information_schema.processlist prl on trx.trx_mysql_thread_id=prl.id where prl.command='Sleep' " \
               "and trx.trx_state='RUNNING' order by trx.trx_started;"
-    upshot = query(port, sql)
-    with open(log_file, 'w') as fwrite:
-        start_log = "MySQL {} deadlock log start \n".format(port).upper().center(114, '#')
-        fwrite.write(start_log)
-        fwrite.write(upshot)
+    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
+    with open(statusLogFile, 'w') as fwrite:
+        headInformation = "MySQL {} deadlock log start \n".format(databasePort).upper().center(114, '#')
+        fwrite.write(headInformation)
+        fwrite.write(databaseQueryUpshot)
 
     sql = "SELECT  prl.id, prl.user, prl.host, trx.trx_id, trx.trx_started, prl.time, prl.db, prl.command, prl.state, " \
           "trx.trx_state, trx.trx_query from information_schema.innodb_trx trx straight_join " \
           "information_schema.processlist prl on trx.trx_mysql_thread_id=prl.id order by trx.trx_started desc;"
-    upshot = query(port, sql)
-    with open(log_file, 'w+') as fwrite:
-        start_log = "Mysql {} uncommitted \n".format(port).upper().center(114, '#')
-        fwrite.write(start_log)
-        fwrite.write(upshot)
+    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
+    with open(statusLogFile, 'w+') as fwrite:
+        headInformation = "Mysql {} uncommitted \n".format(databasePort).upper().center(114, '#')
+        fwrite.write(headInformation)
+        fwrite.write(databaseQueryUpshot)
 
     sql = "SELECT prl.id, prl.user, prl.host, trx.trx_id, trx.trx_started, prl.time, prl.db, prl.command, prl.state, " \
           "trx.trx_state, trx.trx_query FROM information_schema.innodb_trx trx STRAIGHT_JOIN " \
           "information_schema.processlist prl ON trx.trx_mysql_thread_id=prl.id ORDER BY trx.trx_started DESC;"
-    upshot = query(port, sql)
-    with open(log_file, 'w+') as fwrite:
-        start_log = "mysqld {} transaction".format(port).upper().center(114, '#')
-        fwrite.write(start_log)
-        fwrite.write(upshot)
-    sql = "show engine innodb status\G"
-    upshot = query(port, sql)
-    with open(log_file, 'w+') as fwrite:
-        start_log = "{}: Engine innodb status".format(port).upper().center(114, '#')
-        fwrite.write(start_log)
-        fwrite.write(upshot)
-    print "The port {} status log in {}".format(port, log_file)
+    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
+    with open(statusLogFile, 'w+') as fwrite:
+        headInformation = "mysqld {} transaction".format(databasePort).upper().center(114, '#')
+        fwrite.write(headInformation)
+        fwrite.write(databaseQueryUpshot)
+    sql = "SHOW ENGINE INNODB STATUS;"
+    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
+    with open(statusLogFile, 'w+') as fwrite:
+        headInformation = "{}: Engine innodb status".format(databasePort).upper().center(114, '#')
+        fwrite.write(headInformation)
+        fwrite.write(databaseQueryUpshot)
+    print "The databasePort {} status log in {}".format(databasePort, statusLogFile)
 
 
-def qps(port):
+def qps(databasePort):
     print "Com_select                Com_insert                     Com_update              Com_delete".center(114, "#")
     for I in range(10):
-        sql = 'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update","Com_delete","Uptime");'
-        first_query = query(port, sql)
+        sql = 'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update",' \
+              '"Com_delete","Uptime");'
+        first_query = databaseHostQuery(databasePort, sql)
         first_query = dict(first_query)
         sleep(2)
-        second_query = query(port, sql)
+        second_query = databaseHostQuery(databasePort, sql)
         second_query = dict(second_query)
         print "   {}                        {}                              {}                      {} ".format(
             (int(second_query['Com_select']) - int(first_query['Com_select'])) / 2.0,
@@ -179,101 +177,100 @@ def qps(port):
         ).center(114, ' ')
 
 
-def kill(port, type):
-    if type == 'sleep':
+def kill(databasePort, statusType):
+    if statusType == 'sleep':
         sql = "SELECT id FROM information_schema.processlist WHERE command='Sleep' AND user NOT IN " \
               "('event_scheduler','repl','root', 'db_monitor', 'slave', 'system user', 'unauthenticated user', " \
               "'unauthenticated', 'ping');"
-    elif type == 'idle':
+    elif statusType == 'idle':
         sql = "SELECT prl.id FROM information_schema.innodb_trx trx STRAIGHT_JOIN information_schema.processlist prl " \
               "ON trx.trx_mysql_thread_id=prl.id WHERE prl.command='Sleep' AND trx.trx_state='RUNNING' " \
               "ORDER BY trx.trx_started;"
-    elif type == 'run':
+    elif statusType == 'run':
         sql = "SELECT id FROM information_schema.processlist WHERE command!='Sleep' AND user " \
               "NOT IN ('event_scheduler','repl','root', 'db_monitor', 'slave', 'system user', 'unauthenticated user', " \
               "'unauthenticated', 'ping');"
-    elif type == "all":
+    elif statusType == "all":
         sql = "SELECT id FROM information_schema.processlist WHERE user " \
               "NOT IN ('event_scheduler','repl','root', 'db_monitor', 'slave', 'system user', 'unauthenticated user', " \
               "'unauthenticated', 'ping');"
-
     else:
         sql = 'select version()'
-
-    login = base_prepare(port)
-    db = pymysql.connect('127.0.0.1', port, login['user'], login['password'])
-    cursor = db.cursor()
-    cursor.execute(sql)
+    databaseKill = pymysql.connect(host='127.0.0.1', port=databasePort, user=login['user'], password=login['password'])
+    databaseKillCursor = databaseKill.cursor()
+    databaseKillCursor.execute(sql)
     while True:
-        upshot = cursor.fetchone()
-        if upshot is None:
+        databaseUpshot = databaseKillCursor.fetchone()
+        if databaseUpshot is None:
             break
-        sql = 'kill {}'.format(upshot)
-        kill_mysql = db.cursor()
-        kill_mysql.execute(sql)
+        sql = 'kill {}'.format(databaseUpshot)
+        killConnections = databaseKill.cursor()
+        killConnections.execute(sql)
 
 
-def is_alive(port):
-    base_prepare(port)
-    status_command = " /usr/local/mysql_{}/bin/mysqladmin -h'127.0.0.1' -u{} -p{} -P {} ping".format(port,
-                                                                                                     login['user'],
-                                                                                                     login['password'],
-                                                                                                     port)
-    base_lg('run status_command: {} '.format(status_command), level='debug')
-    alive, output = commands.getstatusoutput(status_command)
-    return not alive
+def databaseAlive(databasePort):
+    getUserPass(databasePort)
+    aliveCommand = " /usr/local/mysql_{}/bin/mysqladmin -h'127.0.0.1' -u{} -p{} -P {} ping".format(databasePort,
+                                                                                                   login['user'],
+                                                                                                   login['password'],
+                                                                                                   databasePort)
+    logMsg('run status_command: {} '.format(aliveCommand), level='debug')
+    aliveStatus, output = commands.getstatusoutput(aliveCommand)
+    return not aliveStatus
 
 
-def stop(port):
-    if is_alive(port):
-        stop_command = "/usr/local/mysql_{}/bin/mysqladmin -h'127.0.0.1' -u{} -p{} shutdown ".format(port,
-                                                                                                     login['user'],
-                                                                                                     login['password'])
-        statement = '/usr/local/mysql_{}/bin/mysqladmin'.format(port)
-        base_lg('run stop_command: {}'.format(stop_command), level='debug')
-        if os.path.exists(statement):
-            status, output = commands.getstatusoutput(stop_command)
+def stop(databasePort):
+    if databaseAlive(databasePort):
+        stopMysqlCommand = "/usr/local/mysql_{}/bin/mysqladmin -h'127.0.0.1' -u{} -p{} -P {} shutdown " \
+                           "".format(databasePort, login['user'], login['password'], databasePort)
+        existsCommands = '/usr/local/mysql_{}/bin/mysqladmin'.format(databasePort)
+        logMsg('run stop mysql-server: {} start'.format(stopMysqlCommand), level='debug')
+        if os.path.exists(existsCommands):
+            status, output = commands.getstatusoutput(stopMysqlCommand)
             if not status:
-                print 'stop port: {} successful!!'.format(port)
-                base_lg('stop port: {} successful!!'.format(port), level='debug')
+                print 'stop databasePort: {} successful!!'.format(databasePort)
+                logMsg('stop databasePort: {} successful!!'.format(databasePort), level='debug')
             else:
-                print "stop port: {} failed".format(port)
-                base_lg('stop port: {} failed!!'.format(port), level='debug')
+                print "stop databasePort: {} failed".format(databasePort)
+                logMsg('stop databasePort: {} failed!!'.format(databasePort), level='debug')
     else:
-        print "mysqld: {} is stopped".format(port)
-        base_lg('mysqld: {} is stopped'.format(port), level='debug')
+        print "mysql-server: {} is stopped".format(databasePort)
+        logMsg('mysql-server: {} is stopped'.format(databasePort), level='debug')
 
 
-def start(port):
-    if not is_alive(port):
-        start_command = ["/usr/bin/numactl", "--interleave=all", "/usr/local/mysql_{}/bin/mysqld_safe".format(port),
-                         "--defaults-file=/data/mysql_{}/my.cnf".format(port)]
-        base_lg('run command: {} {}'.format("start_command", start_command), level='debug')
+def start(databasePort):
+    logMsg('start {}'.format(databasePort), level='info')
+    if not databaseAlive(databasePort):
+        startMysql = ["/usr/bin/numactl", "--interleave=all", "/usr/local/mysql_{}/bin/mysqld_safe".format(
+            databasePort), "--defaults-file=/data/mysql_{}/my.cnf".format(databasePort)]
+        logMsg('run startMysql command:  {}'.format(startMysql), level='debug')
         try:
-            subprocess32.run(start_command, stdout=subprocess32.PIPE, stderr=subprocess32.PIPE,
-                             timeout=20)
+            subprocess32.run(startMysql, stdout=subprocess32.PIPE, stderr=subprocess32.PIPE,
+                             timeout=10)
         except subprocess32.TimeoutExpired:
-            base_lg('stop command and get subprocess32.TimeoutExpired', level='debug')
-            print "start {} successful".format(port)
-            base_lg('start {} successful'.format(port))
+            logMsg('start command:{}  and get subprocess32.TimeoutExpired, but stop {} successful'.format(
+                startMysql, databasePort
+            ), level='debug')
+            print "start {} successful".format(databasePort)
         except:
-            base_lg('start {} failed'.format(port))
-            print "start {} failed".format(port)
+            logMsg('start {} failed'.format(databasePort), level='error')
+            print "start {} failed".format(databasePort)
 
     else:
-        print "mysqld: {} is started".format(port)
+        print "mysql-server: {} is started".format(databasePort)
+        logMsg("mysql-server {} is already started".format(databasePort), level='error')
 
 
-def tcp():
-    tcp_cmd = '''netstat -nat | awk '$6=="ESTABLISHED"&&$4~/:'$1'/{gsub(/:.+/,"",$5);print $5}' | sort -u'''
-    upshot, output = commands.getstatusoutput(tcp_cmd)
-    if not upshot:
-        print output
+def netstatTcp():
+    tcpCommand = '''netstat -nat | awk '$6=="ESTABLISHED"&&$4~/:'$1'/{gsub(/:.+/,"",$5);print $5}' | sort -u'''
+    tcpStatus, tcpOutput = commands.getstatusoutput(tcpCommand)
+    if not tcpStatus:
+        print tcpOutput
     else:
-        print "run {} failed".format(tcp_cmd)
+        print "run {} failed".format(tcpCommand)
 
 
-def slave():
+def changeMaster():
     print ''' change master to master_host='', 
     master_port=, 
     master_user='slave', 
@@ -291,31 +288,36 @@ def skip_slave():
     '''
 
 
-def grant_slave(ip, port, user='slave', password='slave'):
-    # iptables -I INPUT -s $ip -p tcp -m tcp --dport $port -j ACCEPT
+def grantSlavePrivileges(slaveIP, slavePort, slaveUser='slave', slavePassword='slave'):
+    # iptables -I INPUT -s $slaveIP -p tcp -m tcp --dport $slavePort -j ACCEPT
     # grant all privileges on *.* to 'db_myshard_rw'@'127.0.0.1' identified by 'hso,8H16Hb4.'
-    grep_commands = 'grep -qP "\s{}.+{}\s+-j ACCEPT" /usr/local/virus/iptables/iptables.add'.format(ip, port)
-    return_value, output = commands.getstatusoutput(grep_commands)
-    if return_value:
-        iptables_add = 'echo "iptables -I INPUT -s {} -p tcp -m tcp --dport {} -j ACCEPT" >> ' \
-                       '/usr/local/virus/iptables/iptables.add'.format(ip, port)
-        commands.getstatusoutput(iptables_add)
-        iptables_add = 'iptables -I INPUT -s {} -p tcp -m tcp --dport {} -j ACCEPT'.format(ip, port)
-        commands.getstatusoutput(iptables_add)
+    existsIpAndPort = 'grep -qP "\s{}.+{}\s+-j ACCEPT" /usr/local/virus/iptables/iptables.add'.format(slaveIP,
+                                                                                                      slavePort)
+    existsOrNot, output = commands.getstatusoutput(existsIpAndPort)
+    if existsOrNot:
+        addIptablesTofile = 'echo "iptables -I INPUT -s {} -p tcp -m tcp --dport {} -j ACCEPT" >> ' \
+                            '/usr/local/virus/iptables/iptables.add'.format(slaveIP, slavePort)
+        commands.getstatusoutput(addIptablesTofile)
+        addIptables = 'iptables -I INPUT -s {} -p tcp -m tcp --dport {} -j ACCEPT'.format(slaveIP, slavePort)
+        commands.getstatusoutput(addIptables)
     else:
-        pass
-    sql = "grant all privileges on *.* to '{}'@'{}' identified by {}".format(ip, user, password)
-    grant_command = "/usr/local/bin/lg {} -e {}".format(port, sql)
-    return_value, output = commands.getstatusoutput(grant_command)
-    if not return_value:
-        print "grant to {}@{} successful".format(user, password)
+        logMsg("the IP: {} and port: {} has exists in iptables".format(slaveIP, slavePort), level='warning')
+    grantPrivilegesSQL = "grant all privileges on *.* to '{}'@'{}' identified by {}".format(slaveIP,
+                                                                                            slaveUser,
+                                                                                            slavePassword)
+    grantPrivilegesByLg = "/usr/local/bin/lg {} -e {}".format(slavePort, grantPrivilegesSQL)
+    existsOrNot, output = commands.getstatusoutput(grantPrivilegesByLg)
+    if not existsOrNot:
+        print "grant to {}@{} successful".format(slaveUser, slavePassword)
+        logMsg("grant privileges to {}@{} successful".format(slaveUser, slavePassword), level='debug')
     else:
-        print "grant to {}@{} failed".format(user, password)
+        print "grant to {}@{} failed".format(slaveUser, slavePassword)
+        logMsg("grant to {}@{} failed".format(slaveUser, slavePassword), level='error')
 
 
 def main():
     print "start loh"
-    base_lg('no such file ', level='error')
+    logMsg('no such file ', level='error')
 
 
 if __name__ == "__main__":
@@ -324,7 +326,43 @@ if __name__ == "__main__":
     if not os.path.exists("/data/dba_logs/script"):
         os.popen2('mkdir -p /data/dba_logs/script')
     logfile = "/data/dba_logs/script/{}_logfile.log".format(filename.rstrip(".py"))
-    lg = base_log(level='info', log_file=logfile)
-    base_lg(msg='this is a log file')
-    login = base_prepare(6301)
+    lg = baseLogging(level='debug', log_file=logfile)
+    logMsg(logMessage='this is a log file')
+    choice_list_2 = ['tcp']
+    choice_list_3 = ['start', 'stop', 'status', 'qps']
+    choice_list_4 = ['kill']
+    if len(sys.argv) == 3 and sys.argv[1] in choice_list_3:
+        login = getUserPass(int(sys.argv[2]))
+        choice = sys.argv[1]
+        port = int(sys.argv[2])
+        if choice == 'start':
+            start(port)
+        elif choice == 'stop':
+            stop(port)
+        elif choice == 'status':
+            databaseStatus(port)
+        elif choice == 'qps':
+            qps(port)
+    elif len(sys.argv) == 2 and sys.argv[1] in choice_list_2:
+        choice = sys.argv[1]
+        if choice == 'tcp':
+            netstatTcp()
+        else:
+            pass
+    elif len(sys.argv) == 4 and sys.argv[1] in choice_list_4:
+        if sys.argv[1] == 'kill' and sys.argv[3] in ['sleep', 'idle', 'run', 'all']:
+            login = getUserPass(int(sys.argv[2]))
+            kill(int(sys.argv[2]), statusType=sys.argv[3])
+        else:
+            pass
+    else:
+        print """
+            usage: 
+                start   [port]: start port mysql-server
+                stop    [port]: stop port mysql-server
+                status  [port]: list the status mysql-server
+                qps     [port]: print a list about mysqlqps
+                tcp           : list tcp connections
+                kill    [port] type in ['sleep','idle','run','all']:
+        """
     main()
