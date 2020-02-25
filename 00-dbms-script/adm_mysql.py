@@ -60,11 +60,8 @@ def getUserPass(databasePort):
 
 def databaseHostQuery(databasePort, sql):
     queryResult = 1
-    databaseQuery = pymysql.connect(host='127.0.0.1',
-                                    port=int(databasePort),
-                                    user=login['user'],
-                                    password=login['password']
-                                    )
+    databaseQuery = pymysql.connect(host='127.0.0.1', port=int(databasePort), user=login['user'],
+                                    password=login['password'])
     try:
         with databaseQuery.cursor() as databaseQueryCursor:
             databaseQueryCursor.execute(sql)
@@ -74,19 +71,15 @@ def databaseHostQuery(databasePort, sql):
         return queryResult
 
 
-def databaseHostInsert(port, statement):
+def databaseHostInsert(databasePort, InsertStatement):
     insertResult = 1
-    databaseInsert = pymysql.connect(host='127.0.0.1',
-                                     port=port,
-                                     user=login['user'],
+    databaseInsert = pymysql.connect(host='127.0.0.1', port=databasePort, user=login['user'],
                                      password=login['password'],
-                                     db='db',
-                                     charset='utf8mb4'
-                                     )
+                                     db='db', charset='utf8mb4')
     logMsg('connect info: {}'.format(databaseInsert), level='debug')
     try:
         with databaseInsert.cursor() as databaseInsertCursor:
-            sql = statement
+            sql = InsertStatement
             logMsg('start run sql: {}'.format(sql))
             databaseInsertCursor.execute(sql)
             logMsg("end run sql: {}".format(sql))
