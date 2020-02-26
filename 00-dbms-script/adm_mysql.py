@@ -16,8 +16,8 @@ import subprocess32
 
 
 def baseLogging(level="debug", log_file=None):
-    loggingLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
-                    "warning": logging.WARNING, "critical": logging.CRITICAL}
+    loggingLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR, "warning": logging.WARNING,
+                    "critical": logging.CRITICAL}
     loggingFormat = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
     dataFormat = "%Y-%m-%d  %H:%M:%S %p"
     if log_file is None:
@@ -41,7 +41,7 @@ def logMsg(logMessage, level='info', to_json=False):
 
 
 def getUserPass(databasePort):
-    loginfo = {'user': '', 'password': ''}
+    userPassword = {'user': '', 'password': ''}
     databasePath = '/etc/snmp/yyms_agent_db_scripts/db_{}.conf'.format(databasePort)
     logMsg('databasePath:{}'.format(databasePath), level='debug')
     if os.path.exists(databasePath):
@@ -49,36 +49,35 @@ def getUserPass(databasePort):
             while True:
                 line = fread.readline()
                 if line.startswith('user'):
-                    loginfo['user'] = line.split('=')[1][0:-1]
+                    userPassword['user'] = line.split('=')[1][0:-1]
                 if line.startswith('password'):
-                    loginfo['password'] = line.split('=')[1][0:-1]
-                    logMsg('return login:{} successful'.format(loginfo), level='debug')
-                    return loginfo
+                    userPassword['password'] = line.split('=')[1][0:-1]
+                    logMsg('return login:{} successful'.format(userPassword), level='debug')
+                    return userPassword
     else:
         logMsg('no such file {}'.format(databasePath), level='error')
 
 
-def databaseHostQuery(databasePort, sql):
+def databaseHostQuery(databasePort, querySql):
     queryResult = 1
-    databaseQuery = pymysql.connect(host='127.0.0.1',
-                                    port=int(databasePort),
-                                    user=login['user'],
-                                    password=login['password']
-                                    )
+    databaseQuery = pymysql.connect(host='127.0.0.1', port=int(databasePort), user=login['user'],
+                                    password=login['password'])
     try:
         with databaseQuery.cursor() as databaseQueryCursor:
-            databaseQueryCursor.execute(sql)
+            queryCount = databaseQueryCursor.execute(querySql)
+            logMsg('queryCount is {}'.format(queryCount), level='debug')
             queryResult = databaseQueryCursor.fetchall()
+            if queryCount == 0:
+                queryResult = "\n\n\n\n"
+                logMsg('queryResult is 0, Reassign queryResult', level='debug')
     finally:
         databaseQuery.close()
         return queryResult
 
 
-def databaseHostInsert(port, statement):
+def databaseHostInsert(databasePort, insertStatement):
     insertResult = 1
-    databaseInsert = pymysql.connect(host='127.0.0.1',
-                                     port=port,
-                                     user=login['user'],
+    databaseInsert = pymysql.connect(host='127.0.0.1', port=databasePort, user=login['user'],
                                      password=login['password'],
                                      db='db',
                                      charset='utf8mb4'
@@ -86,19 +85,20 @@ def databaseHostInsert(port, statement):
     logMsg('connect info: {}'.format(databaseInsert), level='debug')
     try:
         with databaseInsert.cursor() as databaseInsertCursor:
-            sql = statement
-            logMsg('start run sql: {}'.format(sql))
-            databaseInsertCursor.execute(sql)
-            logMsg("end run sql: {}".format(sql))
+            logMsg('start run sql: {}'.format(insertStatement))
+            insertResult = databaseInsertCursor.execute(insertStatement)
+            logMsg("end run sql: {}".format(insertStatement))
             databaseInsert.commit()
+            logMsg("run sql: {} end and commit".format(insertStatement))
     finally:
         databaseInsert.close()
+        logMsg("return insertResult {} ".format(insertResult))
         return insertResult
 
 
 def databaseStatus(databasePort):
     statusLogFile = "/tmp/mysql-{}.log".format(databasePort)
-    logMsg('log sql run result to: {}'.format(logfile), level='debug')
+    logMsg('\n\n\nlog sql run result to: {}\n\n\n'.format(logfile), level='debug')
     sql = "SELECT  r.trx_id as locked_trx, r.trx_query as locked_sql, b.trx_id as block_id, b.trx_query " \
           "AS block_sql, b.trx_mysql_thread_id as block_thread, b.trx_started " \
           "AS block_start_time FROM(information_schema.innodb_lock_waits w " \
@@ -109,9 +109,11 @@ def databaseStatus(databasePort):
     databaseQueryUpshot = databaseHostQuery(databasePort, sql)
     with open(statusLogFile, 'w+') as fwrite:
         headInformation = 'MySQL {} deadlock log start\n'.format(databasePort).upper().center(114, '#')
-        fwrite.write(headInformation)
-        fwrite.write(databaseQueryUpshot)
-
+        fwrite.writelines(headInformation)
+        if databaseQueryUpshot is not None:
+            fwrite.writelines(str(databaseQueryUpshot))
+        else:
+            fwrite.write("\n\n\n")
     sql = 'select @@performance_schema'
     performance = databaseHostQuery(databasePort, sql)
     if performance:
@@ -129,33 +131,34 @@ def databaseStatus(databasePort):
               "and trx.trx_state='RUNNING' order by trx.trx_started;"
     databaseQueryUpshot = databaseHostQuery(databasePort, sql)
     with open(statusLogFile, 'w') as fwrite:
-        headInformation = "MySQL {} deadlock log start \n".format(databasePort).upper().center(114, '#')
+        headInformation = "\n\n\nMySQL {} deadlock log start \n\n\n".format(databasePort).upper().center(114, '#')
         fwrite.write(headInformation)
-        fwrite.write(databaseQueryUpshot)
+        fwrite.write(str(databaseQueryUpshot))
 
     sql = "SELECT  prl.id, prl.user, prl.host, trx.trx_id, trx.trx_started, prl.time, prl.db, prl.command, prl.state, " \
           "trx.trx_state, trx.trx_query from information_schema.innodb_trx trx straight_join " \
           "information_schema.processlist prl on trx.trx_mysql_thread_id=prl.id order by trx.trx_started desc;"
     databaseQueryUpshot = databaseHostQuery(databasePort, sql)
     with open(statusLogFile, 'w+') as fwrite:
-        headInformation = "Mysql {} uncommitted \n".format(databasePort).upper().center(114, '#')
+        headInformation = "\n\n\nMysql {} uncommitted \n\n\n".format(databasePort).upper().center(114, '#')
         fwrite.write(headInformation)
-        fwrite.write(databaseQueryUpshot)
+        fwrite.write(str(databaseQueryUpshot))
 
     sql = "SELECT prl.id, prl.user, prl.host, trx.trx_id, trx.trx_started, prl.time, prl.db, prl.command, prl.state, " \
           "trx.trx_state, trx.trx_query FROM information_schema.innodb_trx trx STRAIGHT_JOIN " \
           "information_schema.processlist prl ON trx.trx_mysql_thread_id=prl.id ORDER BY trx.trx_started DESC;"
     databaseQueryUpshot = databaseHostQuery(databasePort, sql)
     with open(statusLogFile, 'w+') as fwrite:
-        headInformation = "mysqld {} transaction".format(databasePort).upper().center(114, '#')
+        headInformation = "\n\n\nmysqld {} transaction\n\n\n".format(databasePort).upper().center(114, '#')
         fwrite.write(headInformation)
-        fwrite.write(databaseQueryUpshot)
-    sql = "SHOW ENGINE INNODB STATUS;"
+        fwrite.write(str(databaseQueryUpshot))
+    sql = 'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update",' \
+          '"Com_delete","Uptime")'
     databaseQueryUpshot = databaseHostQuery(databasePort, sql)
     with open(statusLogFile, 'w+') as fwrite:
-        headInformation = "{}: Engine innodb status".format(databasePort).upper().center(114, '#')
+        headInformation = "\n\n\n\n{}: Engine innodb status\n\n\n".format(databasePort).upper().center(114, '#')
         fwrite.write(headInformation)
-        fwrite.write(databaseQueryUpshot)
+        fwrite.writelines(str(databaseQueryUpshot).splitlines())
     print "The databasePort {} status log in {}".format(databasePort, statusLogFile)
 
 

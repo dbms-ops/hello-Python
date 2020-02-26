@@ -24,6 +24,7 @@ login = {'password': '6ZCdJ5zzh6', 'user': 'db_monitor'}
 
 def query(sql):
     result = 1
+    resultCount = 0
     databaseQuery = pymysql.connect(host='127.0.0.1',
                                     port=6301,
                                     user=login['user'],
@@ -31,17 +32,19 @@ def query(sql):
                                     )
     try:
         with databaseQuery.cursor() as databaseQueryCursor:
-            databaseQueryCursor.execute(sql)
+            resultCount = databaseQueryCursor.execute(sql)
             result = databaseQueryCursor.fetchall()
     finally:
         databaseQuery.close()
-        return result
+        return resultCount, result
 
 
 def main():
-    result = query(
-        'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update","Com_delete","Uptime");')
+    resultCount, result = query('SELECT * FROM person.runoob_tbl')
     print result
+    print type(result)
+    for I in range(resultCount):
+        print result.index(I)
 
 
 if __name__ == "__main__":
