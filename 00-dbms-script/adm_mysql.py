@@ -29,8 +29,8 @@ def baseLogging(level="debug", log_file=None):
 
 
 def logMsg(logMessage, level='info', to_json=False):
-    logLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
-                "warning": logging.WARNING, "critical": logging.CRITICAL}
+    logLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR, "warning": logging.WARNING,
+                "critical": logging.CRITICAL}
     if not to_json:
         lg.log(logLevel[level], logMessage)
     else:
@@ -60,8 +60,11 @@ def getUserPass(databasePort):
 
 def databaseHostQuery(databasePort, querySql):
     queryResult = 1
-    databaseQuery = pymysql.connect(host='127.0.0.1', port=int(databasePort), user=login['user'],
-                                    password=login['password'])
+    databaseQuery = pymysql.connect(host='127.0.0.1',
+                                    port=int(databasePort),
+                                    user=login['user'],
+                                    password=login['password']
+                                    )
     try:
         with databaseQuery.cursor() as databaseQueryCursor:
             queryCount = databaseQueryCursor.execute(querySql)
@@ -77,7 +80,9 @@ def databaseHostQuery(databasePort, querySql):
 
 def databaseHostInsert(databasePort, insertStatement):
     insertResult = 1
-    databaseInsert = pymysql.connect(host='127.0.0.1', port=databasePort, user=login['user'],
+    databaseInsert = pymysql.connect(host='127.0.0.1',
+                                     port=databasePort,
+                                     user=login['user'],
                                      password=login['password'],
                                      db='db',
                                      charset='utf8mb4'
@@ -152,13 +157,6 @@ def databaseStatus(databasePort):
         headInformation = "\n\n\nmysqld {} transaction\n\n\n".format(databasePort).upper().center(114, '#')
         fwrite.write(headInformation)
         fwrite.write(str(databaseQueryUpshot))
-    sql = 'SHOW GLOBAL STATUS WHERE Variable_name IN ("Com_select","Com_insert","Com_update",' \
-          '"Com_delete","Uptime")'
-    databaseQueryUpshot = databaseHostQuery(databasePort, sql)
-    with open(statusLogFile, 'w+') as fwrite:
-        headInformation = "\n\n\n\n{}: Engine innodb status\n\n\n".format(databasePort).upper().center(114, '#')
-        fwrite.write(headInformation)
-        fwrite.writelines(str(databaseQueryUpshot).splitlines())
     print "The databasePort {} status log in {}".format(databasePort, statusLogFile)
 
 
