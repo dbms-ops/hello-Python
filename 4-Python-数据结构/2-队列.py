@@ -8,12 +8,12 @@ import Queue
 
 
 # 队列中添加数据
-def add_queue():
+def addQueue():
     ID = Queue.Queue(maxsize=200)
     ID.put('10', block=True, timeout=3)
 
 
-def get_queue():
+def getQueue():
     ID = Queue.Queue(maxsize=100)
     ID.put('11', block=True, timeout=3)
     for I in range(10):
@@ -23,7 +23,7 @@ def get_queue():
     print ID.get_nowait()
 
 
-def size_queue():
+def queueSize():
     ID = Queue.Queue(maxsize=102)
     ID.put('11', block=True, timeout=3)
     for I in range(100):
@@ -31,7 +31,7 @@ def size_queue():
     print ID.qsize()
 
 
-def empty_queue():
+def queueIsEmpty():
     # 队列为空也会抛出异常
     ID = Queue.Queue(maxsize=102)
     ID.put('11', block=True, timeout=3)
@@ -41,7 +41,7 @@ def empty_queue():
     print ID.not_empty
 
 
-def full_queue():
+def queueIsFull():
     # 队列如果为满，会立即抛出异常
     ID = Queue.Queue(maxsize=100)
     ID.put('11', block=True, timeout=3)
@@ -52,7 +52,7 @@ def full_queue():
 
 
 def main():
-    get_queue()
+    getQueue()
 
 
 if __name__ == '__main__':
