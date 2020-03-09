@@ -42,6 +42,7 @@ def getMongoUserPass(port):
 
 
 def mongoConnectUri():
+    # 通过urllib来处理可能出现的 / 等特殊字符
     username = urllib.quote_plus(login["username"])
     password = urllib.quote_plus(login["password"])
     port = int(login["port"])
