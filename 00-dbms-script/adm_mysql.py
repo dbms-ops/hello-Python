@@ -10,7 +10,6 @@ import logging
 import os
 import sys
 from time import sleep
-
 import pymysql
 import subprocess32
 
