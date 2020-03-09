@@ -5,13 +5,34 @@
 # description: 实现 dbms 操作的一些基本功能
 #
 
-import os
-import socket
 import commands
+import os
 import re
+import socket
 
 
 class Dbms(object):
+    def getMongoUserPass(self, port):
+        userPassword = {'username': '', 'password': ''}
+        databasePath = "/etc/snmp/yyms_agent_mongo_scripts/mongo_{}.conf".format(port)
+        if os.path.exists(databasePath):
+            with open(databasePath, 'r') as fread:
+                while True:
+                    line = fread.readline()
+                    if line.startswith('user'):
+                        userPassword['username'] = line.split('=')[1][0:-1]
+                    if line.startswith('password'):
+                        userPassword['password'] = line.split('password=')[1][0:-1]
+                        break
+        print userPassword
+        getDbmsPassword = "/data/dbms/dba-tools/bin/dba-tools com.yy.dba.dbms.tools.DbmsPassword -d {}".format(
+            userPassword["password"])
+        status, output = commands.getstatusoutput(getDbmsPassword)
+        if not status:
+            userPassword["password"] = output
+            return userPassword
+        else:
+            print "get Mongo user password failed"
 
     def lg_user_passwd(self, db_type, port):
         """
