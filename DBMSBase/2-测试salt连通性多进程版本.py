@@ -11,7 +11,7 @@ import os
 import threading
 
 
-def read_server_id(file_path):
+def readServerId(file_path):
     absPath = os.path.abspath('.') + '/' + file_path
     if os.path.exists(absPath):
         with open(absPath, 'r') as file_handler:
@@ -25,7 +25,7 @@ def read_server_id(file_path):
         print "no such file {}".format(absPath)
 
 
-def run_salt_test(i, server_id_queue, successful, failed):
+def runSaltTest(i, server_id_queue, successful, failed):
     while True:
         try:
             server_id = server_id_queue.get(block=True, timeout=3)
@@ -42,14 +42,14 @@ def run_salt_test(i, server_id_queue, successful, failed):
     print "summary: succeeded:{} failed:{}".format(successful, failed)
 
 
-def thread_start(filename):
+def threadStart(filename):
     q = Queue.Queue()
-    for server_id in read_server_id(filename):
+    for server_id in readServerId(filename):
         q.put(server_id, block=True, timeout=1)
     successful = 0
     failed = 0
     for I in range(3):
-        threading.Thread(target=run_salt_test, args=(I, q, successful, failed))
+        threading.Thread(target=runSaltTest, args=(I, q, successful, failed))
 
 
 def main():
@@ -59,7 +59,7 @@ def main():
     parser.add_argument('file', help='the file which content server_id information')
     args = parser.parse_args(['server_id'])
     filename = args.file
-    thread_start(filename)
+    threadStart(filename)
 
 
 if __name__ == '__main__':

@@ -5,7 +5,10 @@
 # description: 实现 dbms 操作的一些基本功能
 #
 
+
 import commands
+import json
+import logging
 import os
 import re
 import socket
@@ -20,7 +23,7 @@ class Dbms(object):
                 while True:
                     line = fread.readline()
                     if line.startswith('user'):
-                        userPassword['username'] = line.split('=')[1][0:-1]
+                        userPassword['username'] = line.split('user=')[1][0:-1]
                     if line.startswith('password'):
                         userPassword['password'] = line.split('password=')[1][0:-1]
                         break
@@ -34,7 +37,7 @@ class Dbms(object):
         else:
             print "get Mongo user password failed"
 
-    def lg_user_passwd(self, db_type, port):
+    def getMySQLUserPass(self, port):
         """
         Username and password information for finding applications that need to log in
         :param type: Type of database,Supports a database that requires a password to log in and a service profile
@@ -43,7 +46,7 @@ class Dbms(object):
         :return: Returns a dictionary containing usernames and passwords;
         """
         login = {'user': '', 'password': ''}
-        filepath = "/etc/snmp/yyms_agent_{}_scripts/mongo_{}.conf".format(db_type, port)
+        filepath = "/etc/snmp/yyms_agent_db_scripts/db_{}.conf".format(port)
         if os.path.exists(filepath):
             with open(filepath, 'r') as fread:
                 while True:
@@ -54,7 +57,7 @@ class Dbms(object):
                         login['password'] = line.split('=')[1][0:-1]
                         return login
 
-    def port_is_listen(self, ip, port, timeout=10):
+    def portIsListen(self, ip, port, timeout=10):
         """
         Function used to verify whether the port is listening.
         :param ip: IP address of the host.
@@ -74,16 +77,41 @@ class Dbms(object):
     def write_file_append(self, file_path, content):
         pass
 
-    def run_command(self, command):
+    def runCommand(self, command):
         status, output = commands.getstatusoutput(command)
         return {'status': status, 'output': re.split(r'[\t\n\r\f\v]', output)}
+
+    def baseLogging(self, level="debug", log_file=None):
+        loggingLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR,
+                        "warning": logging.WARNING,
+                        "critical": logging.CRITICAL}
+        loggingFormat = "%(asctime)s: %(levelname)s %(levelno)s %(message)s"
+        dataFormat = "%Y-%m-%d  %H:%M:%S %p"
+        if log_file is None:
+            logging.StreamHandler(sys.stderr)
+        else:
+            logging.basicConfig(filename=log_file, filemode='a+', format=loggingFormat, level=loggingLevel[level],
+                                datefmt=dataFormat)
+        return logging
+
+    def logMsg(self, logMessage, level='info', to_json=False):
+        logLevel = {"debug": logging.DEBUG, "info": logging.INFO, "error": logging.ERROR, "warning": logging.WARNING,
+                    "critical": logging.CRITICAL}
+        if not to_json:
+            lg.log(logLevel[level], logMessage)
+        else:
+            if isinstance(logMessage, dict) or isinstance(logMessage, list):
+                lg.log(logLevel[level], json.dumps(logMessage, ensure_ascii=False, indent=2, separators=[",", ":"]))
+            else:
+                lg.log(logLevel[level], logMessage)
+
 
 
 def main():
     db = Dbms()
-    print db.run_command('netstat -ntl | grep 3306')
+    print db.runCommand('netstat -ntl | grep 3306')
     mysql_log_in = Dbms()
-    mysql_log_in.lg_user_passwd('db', 6301)
+    mysql_log_in.getMySQLUserPass('db', 6301)
 
 
 if __name__ == '__main__':
