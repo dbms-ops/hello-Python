@@ -8,9 +8,9 @@
 
 import redis
 
-
 def testRedis(port):
     redisClient = redis.Redis(host="127.0.0.1", port=4013, db=0)
+    redisClient.ping()
 
 
 def main():
