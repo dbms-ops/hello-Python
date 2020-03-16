@@ -11,11 +11,11 @@
 # mongo 测试实例：
 #
 
-import commands
 import os
 import urllib
-
 import pymongo
+import commands
+
 
 
 def getMongoUserPass(port):
