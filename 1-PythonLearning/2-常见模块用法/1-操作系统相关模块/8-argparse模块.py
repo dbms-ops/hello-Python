@@ -200,7 +200,7 @@ def squre_and_verbosity():
     #
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("x", type=int, help="the DBMSBase")
+    parser.add_argument("x", type=int, help="the 2-DBMSBase")
     parser.add_argument("y", type=int, help="the exponent")
     parser.add_argument("-v", "--verbosity", action="count", default=0,
                         help="show the result of x^y")
@@ -227,7 +227,7 @@ def add_mutually_exclusive():
     #   description:
     #   version:
     #   add_help:
-    parser.add_argument("x", type=int, help="the DBMSBase")
+    parser.add_argument("x", type=int, help="the 2-DBMSBase")
     parser.add_argument("y", type=int, help="the exponent")
 
     group = parser.add_mutually_exclusive_group()

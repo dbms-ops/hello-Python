@@ -11,12 +11,13 @@
 # mongo 测试实例：
 #
 
+import commands
+import logging
 import os
 import sys
 import urllib
+
 import pymongo
-import logging
-import commands
 
 
 def baseLogging(level="debug", log_file=None):
