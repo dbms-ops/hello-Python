@@ -7,10 +7,10 @@
 
 
 # 数据结构-元组
-#       元组：元组和列表类似，但是元组内的元素是不可变得
+#    元组：元组和列表类似，元祖内部的元素不可变；
 #
 
-def create_tuple_help():
+def createTupleHelp():
     # 定义元素
     number = (1, 2, 3, 4, 5, 6, [1, 2, 3, 4])
     print type(number), number
@@ -19,14 +19,14 @@ def create_tuple_help():
     print number[0], number[1], number[2], number[-3]
 
 
-def modify_tuple_help():
+def modifyTupleHelp():
     # 元组里面的元素是不允许进行修改的
     number = (1, 2, 3, 4, 5, 6, [1, 2, 3, 4])
     number[6][1] = "name"
     print number
 
 
-def del_tuple_help():
+def delTupleHelp():
     # 清空并且删除元组
     number = (1, 2, 3, 4, 5, 6, [1, 2, 3, 4])
     del number
@@ -35,25 +35,25 @@ def del_tuple_help():
 # 元组的操作
 # 元组相加
 
-def tuple_addition_help():
+def tupleDdditionHelp():
     num = (1, 2, 3, 4, 5)
     name = ('alice', 'tom', 'jerry')
     print num + name
 
 
-def repeat_tuple_help():
+def repeatTupleHelp():
     # 元组重复
     num = (1, 2, 3, 4, 5)
     print num * 3
 
 
-def in_tuple_help():
+def inTupleHelp():
     # 元组包含
     num = (1, 2, 3, 4, 5)
     print 11 in num
 
 
-def intercept_help():
+def interceptHelp():
     # 元组截取
     num = (1, 2, 3, 4, 5, 6, 7, 8, 9) * 3
     print num
@@ -61,39 +61,39 @@ def intercept_help():
     print num[4:-4]
 
 
-def Two_dimensional_tuple_help():
+def twoDimensionalTupleHelp():
     # 二维元组
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     print num
 
 
-def len_help():
+def lenHelp():
     # 元组的方法
     # 元组中元素的个数
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     len(num)
 
 
-def max_help():
+def maxHelp():
     # 元组中的最大值
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     print max(num)
 
 
-def min_help():
+def minHelp():
     # 元组中的最小值
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     print min(num)
 
 
-def list_to_tuple_help():
+def listToTupleHelp():
     # 列表转换元组
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     num = tuple(list(num))
     print num
 
 
-def print_tuple_help():
+def printTupleHelp():
     # 元组循环
     num = ((1, 2, 3), (4, 5, 6), (7, 8, 9))
     for i in num:
@@ -102,7 +102,7 @@ def print_tuple_help():
 
 
 def main():
-    print_tuple_help()
+    printTupleHelp()
 
 
 if __name__ == '__main__':
