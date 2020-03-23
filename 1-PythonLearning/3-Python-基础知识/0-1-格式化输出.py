@@ -1,9 +1,9 @@
-# -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# date: 2020/1/16 16:57
+# -*-coding:utf-8-*-
+# date: 2020-1-16 16:57
 # user: Administrator
-# description: print 格式化输出文本
-# 
+# description: 文本输出，格式化字符串进行输出
+#
 
 # 格式化输出 print 使用
 #
