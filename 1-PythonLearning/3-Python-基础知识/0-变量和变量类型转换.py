@@ -1,6 +1,6 @@
-# -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python2.7
-# date: 2020/1/16 16:57
+# -*-coding:utf-8-*-
+# date: 2020-1-16 16:57
 # user: Administrator
 # description: 常见类型的变量输出
 #

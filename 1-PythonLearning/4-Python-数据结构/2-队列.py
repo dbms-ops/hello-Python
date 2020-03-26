@@ -1,5 +1,5 @@
+#!/data1/Python2.7/bin/python2.7
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python2.7
 # date: 2020/1/22 17:54
 # user: Administrator
 # description: Python 通过模块来支持队列 Queue, 模块在多线程使用过程中：block 和 timeout 都需要合理的设置，否则会导致线程陷入等待
