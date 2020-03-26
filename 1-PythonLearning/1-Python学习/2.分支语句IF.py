@@ -1,6 +1,5 @@
-#
-# -*-coding:utf-8-*-
 # !/data1/Python2.7/bin/python27
+# -*-coding:utf-8-*-
 # time: 2020-01-24 10:21
 # user: linux
 # descriptio： 简单的分支语句

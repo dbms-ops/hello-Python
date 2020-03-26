@@ -1,66 +1,94 @@
-# -*-coding:utf-8-*-
 #!/data1/Python2.7/bin/python2.7
+# -*-coding:utf-8-*-
+# @date: 2020/3/19 16:48
+# @user: Administrator
+# @fileName: strings模块.py
+# @description: string 字符串的相关方法
+#
 
 
 # string模块：用于进行常见的字符串处理
 import string
 
-# 字符串中首字母转换成为大写
-s = "the quick brown fox jumped over the lazy dog."
-print s
-print string.capitalize(s)
-print s.capitalize()
 
-# 使用空格填充字符长度为width，并且将原字符居中
-s = "The quick brown fox jumped over the lazy dog."
-print s.center(100)
+def InitialCapital():
+    # 字符串中首字母转换成为大写
+    s = "the quick brown fox jumped over the lazy dog."
+    print s
+    print string.capitalize(s)
+    print s.capitalize()
 
-# 用于返回字符串sub在S中出现的次数
-s = "The quick brown fox ro juromped over the lazy dog."
-sub = "ro"
-print s.count(sub)
 
-# 以指定的格式编解码码字符串
-print s.encode("utf-8").decode("utf-8")
+def stringCenter():
+    # 使用空格填充字符长度为width，并且将原字符居中
+    s = "The quick brown fox jumped over the lazy dog."
+    print s.center(100)
 
-# 判断字符串是否以 S 结尾
-s = "The quick brown fox ro juromped over the lazy dog."
-print s.endswith("dog.")
 
-# 查找字符串在目标串中的位置,没有返回-1
-s = "The quick brown fox ro juromped over the lazy dog."
-sub = "ro"
-print s.find(sub)
+def countSubstring():
+    # 用于返回字符串sub在S中出现的次数
+    s = "The quick brown fox ro juromped over the lazy dog."
+    sub = "ro"
+    print s.count(sub)
+
+
+def stringEncode():
+    # 以指定的格式编解码码字符串
+    print s.encode("utf-8").decode("utf-8")
+
+
+def stringEndWith():
+    # 判断字符串是否以 S 结尾
+    s = "The quick brown fox ro juromped over the lazy dog."
+    print s.endswith("dog.")
+
+
+def stringFindPosition():
+    # 查找字符串在目标串中的位置,没有返回-1
+    s = "The quick brown fox ro juromped over the lazy dog."
+    sub = "ro"
+    print s.find(sub)
+
 
 # index(s):用于查找字符串，如果不存在返回异常
+def stringIndex():
+    s = "The quick brown fox ro juromped over the lazy dog."
+    sub = "roo"
+    try:
+        print s.index(sub)
+    except:
+        print "throw error"
 
-s = "The quick brown fox ro juromped over the lazy dog."
-sub = "roo"
-try:
-    print s.index(sub)
-except:
-    print "throw error"
 
 # True：至少有一个字符并且都是字母或者数字
-s = "The quick brown fox ro juromp1ed over the lazy dog."
-s1 = ""
-print s.isalnum(),s1.isalnum()
+def stringIsnalnum():
+    s = "The quick brown fox ro juromp1ed over the lazy dog."
+    s1 = ""
+    print s.isalnum(), s1.isalnum()
 
-# True:至少存在一个字符，并且都是字母
-s = "The quick br4ow2n1 fo3x ro ju5romp1ed o3ver th4e lazy dog."
-s1 = "Thequick"
-print s.isalpha(),s1.isalpha()
 
-# True: 只包含数字
-s = "111111 223"
-s1 = "11111"
-print s.isdigit(),s1.isdigit()
+def stringIsalpha():
+    # True:至少存在一个字符，并且都是字母
+    s = "The quick br4ow2n1 fo3x ro ju5romp1ed o3ver th4e lazy dog."
+    s1 = "Thequick"
+    print s.isalpha(), s1.isalpha()
 
-# True: 只包含空格
-s = "    "
-s1 = " 1 2 3"
-print s.isspace(),s1.isspace()
 
+def stringIsdigit():
+    # True: 只包含数字
+    s = "111111 223"
+    s1 = "11111"
+    print s.isdigit(), s1.isdigit()
+
+
+def stringIsspace():
+    # True: 只包含空格
+    s = "    "
+    s1 = " 1 2 3"
+    print s.isspace(), s1.isspace()
+
+
+def
 # ljust():左对齐，使用空格从左边开始填充
 s = "                        Actions speak louder than words"
 print s.ljust(56)
@@ -74,7 +102,6 @@ sf = "From small beginnings comes great things"
 ss = "small"
 print sf.partition(ss)
 
-
 # lower():用于将大写转换称为小写
 s = "Every man is his own worst enemy"
 print s.lower()
@@ -82,17 +109,17 @@ print s.lower()
 # a.replace(b): 使用 b 替换 a 里面的字符串
 s = "The voice of one man is the voice of no one"
 sub = "two"
-print s.replace("one",sub)
+print s.replace("one", sub)
 
 # str.rfind():用于从右边开始进行查找
 s = "The voice of one man is the voice of no one"
 sub = "one"
-print s.rfind(sub),s.find(sub)
+print s.rfind(sub), s.find(sub)
 
 # str.rindex():类似于index，从右边开始查找
 s = "The voice of one man is the voice of no one"
 sub = "one"
-print s.index(sub),s.rindex(sub)
+print s.index(sub), s.rindex(sub)
 
 # str.rjust():返回一个右对齐的，使用空格填充至长度为width的新字符串
 s = "The voice of one man is the voice of no one"
@@ -117,7 +144,7 @@ print type(s.split("A"))
 
 # s.startwith(s):判断字符串S是否是按照s开头的
 s = "A great ship asks for deep waters Two heads are better than one " * 4
-print s.startswith("A"),s.startswith("G")
+print s.startswith("A"), s.startswith("G")
 
 # s.strip():相当于同时执行 lstrip(), rstrip()
 
@@ -143,7 +170,7 @@ s.zfill(178)
 leet = string.maketrans('abegiloprstz', '463611092572')
 s = "The quick brown fox jumped over the lazy dog."
 print s
-print string.translate(s,leet)
+print string.translate(s, leet)
 
 # 字符串常用技巧
 # 字符串反转
@@ -158,31 +185,23 @@ s3 = "ever "
 s4 = "achieved "
 s5 = "without "
 s6 = "enthusiasm."
-print ''.join([s,s1,s2,s3,s4,s5,s6])
+print ''.join([s, s1, s2, s3, s4, s5, s6])
 print s + s1 + s2 + s3 + s4 + s5 + s6
 
 # 按照固定长度分割字符串
 import re
+
 s = "1234567890"
-print re.findall(r'.{1,3}',s)
+print re.findall(r'.{1,3}', s)
 
 # 优雅的字符串
-SQL = ( 'SELECT COUNT(*) FROM TABLE_NAME '
-        'WHER ID = 10 '
-        'GROUP BY SEX'
-)
+SQL = ('SELECT COUNT(*) FROM TABLE_NAME '
+       'WHER ID = 10 '
+       'GROUP BY SEX'
+       )
 print SQL
 
 # 将print 的字符串写入文件
 print >> open("somefile.txt", "w+"), "Hello World"
 
 #
-
-
-
-
-
-
-
-
-

@@ -1,9 +1,8 @@
-#
+#!/data1/Python2.7/bin/python27
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python27
-#
-# 循环
-#
+# time: 2020-01-24 10:21
+# user: linux
+# description: Python 执行简单的循环
 
 
 #

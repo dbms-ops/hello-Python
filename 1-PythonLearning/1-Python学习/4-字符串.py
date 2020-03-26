@@ -1,8 +1,9 @@
-#
+#!/data1/Python2.7/bin/python27
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python27
+# time: 2020-01-24 10:21
+# user: linux
+# description: 数据结构：简单的字符串
 #
-# 数据结构：简单的字符串
 
 # 字符串的四种表现方式
 

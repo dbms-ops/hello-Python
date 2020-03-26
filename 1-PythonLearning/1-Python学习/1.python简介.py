@@ -1,6 +1,5 @@
-#
+#!/data1/Python2.7/bin/python27
 # -*-coding:utf-8-*-
-# !/data1/Python2.7/bin/python27
 # time: 2020-01-24 10:21
 # user: linux
 # description: 开始学习Python的第一个脚本

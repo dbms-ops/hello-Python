@@ -197,7 +197,7 @@ def osGetctime():
     print os.path.getmtime("/root/script/tmp/temp/a/file")
 
 
-def osSystem():
+def osSystemCommand():
     # 其他方法
     # 执行操作系统命令
     os.system("touch a")
