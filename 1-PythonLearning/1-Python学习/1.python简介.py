@@ -4,6 +4,7 @@
 # user: linux
 # description: 开始学习Python的第一个脚本
 
+import os
 import platform
 
 print "start learn python"
@@ -22,10 +23,10 @@ print platform.machine()
 print "你好"
 print "hello"
 
-import os
+
 
 print os.getcwd()
-os.chdir("D:\Python")
+os.chdir("/tmp/")
 print os.getcwd()
 
 
