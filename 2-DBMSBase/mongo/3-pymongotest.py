@@ -11,10 +11,9 @@
 # mongo 测试实例：
 #
 
-import commands
 import os
 import urllib
-
+import commands
 import pymongo
 
 
